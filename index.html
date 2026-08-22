@@ -412,10 +412,13 @@ const DATA = {
 };
 
 /* ---------- rendering ---------- */
-let lang = localStorage.getItem("ya-lang");
+// Language priority: ?lang= URL override → saved choice → browser language → English.
+const urlLang = new URLSearchParams(location.search).get("lang");
+let lang = ["en","tr"].includes(urlLang) ? urlLang : localStorage.getItem("ya-lang");
 if (!["en","tr"].includes(lang)){
   lang = (navigator.language||"").toLowerCase().startsWith("tr") ? "tr" : "en";
 }
+if (urlLang) localStorage.setItem("ya-lang", lang);
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const L = o => esc(o[lang]);
