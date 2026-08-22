@@ -1,0 +1,15 @@
+{
+  "name": "Youth Alive 26 — Summer Camp",
+  "short_name": "Youth Alive 26",
+  "description": "Everything for Youth Alive 26 Summer Camp — rules, packing, transport, schedule and more, in one place.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7941D",
+  "theme_color": "#2C2A8E",
+  "lang": "en",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

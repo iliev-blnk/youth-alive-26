@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2C2A8E">
+<title>Youth Alive 26 — Summer Camp</title>
+<meta name="description" content="Everything you need for Youth Alive 26 Summer Camp — rules, packing list, transportation, schedule and more. All in one place.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-top:#FFD23F; --bg-bot:#F7941D;
+    --indigo:#2C2A8E; --purple:#4B3FA0; --cyan:#21C3E0;
+    --card:#FFFFFF; --ink:#20204A; --muted:#5b5b86;
+    --line:#e7e7f3; --soft:#f4f4fb;
+    --radius:22px; --shadow:0 18px 40px rgba(44,42,142,.18);
+    --maxw:820px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Nunito",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bot) 60%,#e97e12 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+  }
+  a{color:var(--indigo);font-weight:700}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+
+  /* ---------- Decorative silhouettes ---------- */
+  .silhouette{position:fixed;left:0;right:0;bottom:0;width:100%;z-index:0;pointer-events:none;opacity:.9;line-height:0}
+  .silhouette svg{width:100%;height:auto;display:block}
+  .content{position:relative;z-index:1}
+
+  /* ---------- Hero ---------- */
+  header.hero{position:relative;text-align:center;padding:34px 16px 20px;overflow:hidden}
+  .flame{font-size:0;line-height:0}
+  .flame svg{width:52px;height:52px;filter:drop-shadow(0 4px 0 rgba(44,42,142,.25))}
+  .brand{
+    font-family:"Anton",sans-serif;letter-spacing:2px;line-height:.92;
+    color:var(--indigo);text-transform:uppercase;
+    font-size:clamp(38px,10vw,72px);margin:6px 0 0;
+    text-shadow:3px 3px 0 rgba(255,255,255,.7);
+  }
+  .brand .yr{color:var(--cyan);-webkit-text-stroke:2px var(--indigo);paint-order:stroke fill}
+  .sub{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:2px}
+  .sub .summer{font-family:"Pacifico",cursive;font-size:clamp(26px,7vw,44px);color:#0f9fc4;
+    text-shadow:2px 2px 0 #fff;transform:rotate(-4deg)}
+  .sub .camp{font-family:"Anton",sans-serif;font-size:clamp(28px,7.5vw,48px);letter-spacing:2px;
+    color:var(--indigo);text-transform:uppercase}
+  .tagline{font-family:"Fredoka",sans-serif;font-weight:600;color:var(--indigo);
+    text-transform:uppercase;letter-spacing:3px;font-size:13px;margin-top:6px;opacity:.85}
+  .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .pill{background:var(--indigo);color:#fff;border-radius:999px;padding:7px 15px;
+    font-weight:800;font-size:14px;display:inline-flex;gap:7px;align-items:center;
+    box-shadow:0 6px 0 rgba(44,42,142,.25)}
+  .pill.alt{background:#fff;color:var(--indigo)}
+
+  /* ---------- Language toggle ---------- */
+  .lang{margin:18px auto 0;display:inline-flex;background:rgba(255,255,255,.55);
+    border:2px solid var(--indigo);border-radius:999px;padding:4px}
+  .lang button{font-family:"Fredoka",sans-serif;font-weight:700;font-size:15px;
+    border:0;background:transparent;color:var(--indigo);padding:7px 20px;border-radius:999px;
+    cursor:pointer;transition:.15s}
+  .lang button[aria-pressed="true"]{background:var(--indigo);color:#fff}
+
+  /* ---------- Sticky nav ---------- */
+  nav.chips{position:sticky;top:0;z-index:20;background:rgba(255,210,63,.92);
+    backdrop-filter:blur(8px);border-bottom:2px solid rgba(44,42,142,.15);
+    margin-top:16px}
+  .chips-inner{display:flex;gap:8px;overflow-x:auto;padding:11px 16px;
+    max-width:var(--maxw);margin:0 auto;scrollbar-width:none}
+  .chips-inner::-webkit-scrollbar{display:none}
+  .chip{white-space:nowrap;flex:0 0 auto;font-family:"Fredoka",sans-serif;font-weight:600;
+    font-size:14px;background:#fff;color:var(--indigo);border:2px solid var(--indigo);
+    border-radius:999px;padding:6px 14px;cursor:pointer;text-decoration:none;transition:.15s}
+  .chip:hover{background:var(--indigo);color:#fff}
+  .chip.active{background:var(--indigo);color:#fff}
+
+  /* ---------- Cards / sections ---------- */
+  main{padding:22px 0 60px}
+  section.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:22px;margin:0 0 20px;scroll-margin-top:70px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin:0 0 6px}
+  .sec-ico{width:42px;height:42px;flex:0 0 auto;border-radius:12px;background:var(--soft);
+    display:grid;place-items:center;font-size:22px}
+  .sec-title{font-family:"Fredoka",sans-serif;font-weight:700;color:var(--indigo);
+    font-size:clamp(21px,5vw,26px);margin:0;line-height:1.1}
+  .sec-note{color:var(--muted);font-size:14px;margin:0}
+  .intro{color:var(--muted);margin:4px 0 14px;font-size:15px}
+
+  /* quick facts */
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .fact{background:var(--soft);border-radius:14px;padding:12px 14px}
+  .fact .k{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--purple);font-weight:800}
+  .fact .v{font-weight:800;color:var(--ink);font-size:15px;margin-top:2px}
+  @media(max-width:480px){.facts{grid-template-columns:1fr}}
+
+  /* rules */
+  ol.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+  ol.rules li{counter-increment:r;display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+  ol.rules li:last-child{border-bottom:0}
+  ol.rules li::before{content:counter(r);flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+    background:var(--indigo);color:#fff;font-family:"Fredoka",sans-serif;font-weight:700;
+    display:grid;place-items:center;font-size:14px;margin-top:1px}
+  .rule-t{font-weight:800;color:var(--indigo)}
+  .rule-d{color:var(--ink)}
+
+  /* accordion */
+  details.acc{border:2px solid var(--line);border-radius:14px;margin:0 0 10px;overflow:hidden;background:#fff}
+  details.acc[open]{border-color:var(--indigo)}
+  details.acc>summary{list-style:none;cursor:pointer;padding:13px 15px;font-family:"Fredoka",sans-serif;
+    font-weight:600;color:var(--indigo);display:flex;justify-content:space-between;align-items:center;gap:10px}
+  details.acc>summary::-webkit-details-marker{display:none}
+  details.acc>summary .caret{transition:.2s;font-size:13px;color:var(--purple)}
+  details.acc[open]>summary .caret{transform:rotate(180deg)}
+  details.acc .body{padding:0 15px 14px}
+  ul.list{margin:6px 0 0;padding-left:20px}
+  ul.list li{margin:5px 0}
+  ul.check{list-style:none;padding:0;margin:6px 0 0}
+  ul.check li{position:relative;padding-left:26px;margin:7px 0}
+  ul.check li::before{content:"✓";position:absolute;left:0;top:0;color:#149a6b;font-weight:900}
+  ul.no{list-style:none;padding:0;margin:6px 0 0}
+  ul.no li{position:relative;padding-left:26px;margin:7px 0}
+  ul.no li::before{content:"✕";position:absolute;left:0;top:0;color:#d23b3b;font-weight:900}
+
+  /* callout / placeholder */
+  .callout{background:linear-gradient(180deg,#fff9e8,#fff2cf);border:2px dashed var(--bg-bot);
+    border-radius:14px;padding:14px 16px;color:#8a5a00;font-weight:600}
+  .soon{display:inline-block;background:var(--cyan);color:#083b47;font-weight:800;font-size:12px;
+    text-transform:uppercase;letter-spacing:.5px;border-radius:999px;padding:3px 10px;margin-left:8px}
+  .tip{background:var(--soft);border-left:4px solid var(--cyan);border-radius:0 12px 12px 0;
+    padding:11px 14px;margin:10px 0 0;font-size:14px}
+  .tip b{color:var(--indigo)}
+
+  /* transport steps */
+  .tline{display:grid;gap:10px;margin-top:6px}
+  .tstep{display:flex;gap:12px;background:var(--soft);border-radius:14px;padding:12px 14px}
+  .tstep .badge{flex:0 0 auto;background:var(--cyan);color:#083b47;font-weight:800;border-radius:10px;
+    padding:6px 10px;font-size:13px;height:fit-content;text-transform:uppercase;letter-spacing:.5px}
+
+  /* contact */
+  .links{display:grid;gap:10px;margin-top:6px}
+  .linkbtn{display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--soft);
+    border-radius:14px;padding:13px 15px;color:var(--ink);font-weight:700;transition:.15s}
+  .linkbtn:hover{background:var(--indigo);color:#fff}
+  .linkbtn:hover .lsub{color:#dcdcff}
+  .linkbtn .lico{font-size:22px}
+  .lsub{display:block;font-weight:600;color:var(--muted);font-size:13px}
+
+  footer{text-align:center;color:var(--indigo);font-weight:700;padding:6px 16px 30px;position:relative;z-index:1}
+  footer .heart{color:#d23b3b}
+</style>
+</head>
+<body>
+
+<!-- background mountains + forest -->
+<div class="silhouette" aria-hidden="true">
+  <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#2C2A8E" opacity="0.16" d="M0,160 L120,90 L220,150 L340,60 L460,150 L560,110 L700,170 L860,80 L1000,160 L1140,100 L1280,160 L1440,110 L1440,220 L0,220 Z"/>
+    <path fill="#2C2A8E" opacity="0.28" d="M0,190 L90,140 L180,185 L300,120 L420,185 L540,150 L660,195 L800,130 L940,190 L1080,150 L1220,195 L1360,150 L1440,180 L1440,220 L0,220 Z"/>
+    <g fill="#2C2A8E" opacity="0.9">
+      <path d="M60,220 L60,175 L45,175 L60,158 L50,158 L68,140 L86,158 L76,158 L91,175 L76,175 L76,220 Z"/>
+      <path d="M1330,220 L1330,180 L1318,180 L1332,164 L1323,164 L1340,146 L1357,164 L1348,164 L1362,180 L1350,180 L1350,220 Z"/>
+      <path d="M1180,220 L1180,185 L1170,185 L1182,171 L1174,171 L1189,155 L1204,171 L1196,171 L1208,185 L1198,185 L1198,220 Z"/>
+      <path d="M250,220 L250,188 L241,188 L252,175 L245,175 L258,160 L271,175 L264,175 L275,188 L266,188 L266,220 Z"/>
+    </g>
+  </svg>
+</div>
+
+<div class="content">
+<header class="hero">
+  <div class="flame" aria-hidden="true">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#F7941D" stroke="#2C2A8E" stroke-width="1.3" d="M12 2c2.5 3 3 5 1.5 6.5C12.8 9.2 12 8.5 12 7c-1.5 1.5-4 4-4 7.5A4 4 0 0 0 12 22a4.2 4.2 0 0 0 4.4-4.2c0-1.2-.4-2-1-2.8.2 1-.4 1.8-1.2 2 .6-1.6.2-3.5-1-5 .2 2-.8 3-1.7 3.2C10 14.5 10 12 12 9.5 14.5 6.7 15 4.5 12 2Z"/></svg>
+  </div>
+  <h1 class="brand">Youth Alive <span class="yr">26</span></h1>
+  <div class="sub"><span class="summer">summer</span><span class="camp">Camp</span></div>
+  <div class="tagline" data-i18n="tagline">Bound by Love</div>
+  <div class="meta">
+    <span class="pill">📅 <span data-i18n="heroDates">18–20 September 2026</span></span>
+    <span class="pill alt">📍 <span data-i18n="heroLoc">Sapanca, Sakarya</span></span>
+  </div>
+  <div class="lang" role="group" aria-label="Language">
+    <button id="btn-en" onclick="setLang('en')" aria-pressed="true">EN</button>
+    <button id="btn-tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
+  </div>
+</header>
+
+<nav class="chips" aria-label="Sections">
+  <div class="chips-inner" id="chips"></div>
+</nav>
+
+<main class="wrap" id="main"></main>
+
+<footer>
+  <span data-i18n="footer">Youth Alive 26 · See you at camp</span> <span class="heart">♥</span>
+</footer>
+</div>
+
+<script>
+/* ============================================================
+   Youth Alive 26 — camp info hub. All content lives here.
+   To update: edit the DATA object below. Every field has
+   { en, tr }. Schedule + Music are placeholders — drop the
+   real content into DATA.schedule / DATA.music when ready.
+   ============================================================ */
+
+const UI = {
+  soon:      { en:"Coming soon", tr:"Yakında" },
+  seeGroup:  { en:"More details will be shared in the WhatsApp participant group.",
+               tr:"Daha fazla ayrıntı WhatsApp katılımcı grubunda paylaşılacaktır." },
+};
+
+const DATA = {
+  nav: [
+    { id:"facts",     ico:"⛺", en:"Quick facts",  tr:"Özet bilgi" },
+    { id:"schedule",  ico:"🗓️", en:"Schedule",     tr:"Program" },
+    { id:"rules",     ico:"📋", en:"Rules",        tr:"Kurallar" },
+    { id:"packing",   ico:"🎒", en:"Packing list", tr:"Eşya listesi" },
+    { id:"dont",      ico:"🚫", en:"Don't bring",  tr:"Getirilmez" },
+    { id:"transport", ico:"🚆", en:"Transport",    tr:"Ulaşım" },
+    { id:"music",     ico:"🎵", en:"Music",        tr:"Müzik" },
+    { id:"notes",     ico:"💡", en:"Notes",        tr:"Notlar" },
+    { id:"contact",   ico:"📞", en:"Contact",      tr:"İletişim" },
+  ],
+
+  facts: {
+    title:{ en:"Quick facts", tr:"Özet bilgi" },
+    ico:"⛺",
+    items:[
+      { k:{en:"Dates",tr:"Tarihler"},        v:{en:"18–20 September 2026",tr:"18–20 Eylül 2026"} },
+      { k:{en:"Where",tr:"Yer"},             v:{en:"Vadi Camping · Sapanca, Sakarya",tr:"Vadi Camping · Sapanca, Sakarya"} },
+      { k:{en:"Arrival",tr:"Varış"},         v:{en:"Fri 18 Sep, by 10–11 AM",tr:"18 Eylül Cuma, 10–11 civarı"} },
+      { k:{en:"Departure",tr:"Ayrılış"},     v:{en:"Sun 20 Sep, after 4 PM",tr:"20 Eylül Pazar, 16:00'dan sonra"} },
+      { k:{en:"Ages",tr:"Yaş"},              v:{en:"18–30 years",tr:"18–30 yaş"} },
+      { k:{en:"Fee",tr:"Ücret"},             v:{en:"1.200 TL (incl. 7 meals)",tr:"1.200 TL (7 öğün dahil)"} },
+    ],
+    note:{ en:"Package includes camping access (3 days / 2 nights), tents & gear, 7 meals, a YA 26 kit, insurance and all activity materials.",
+           tr:"Pakete kamp erişimi (3 gün / 2 gece), çadır ve ekipman, 7 öğün yemek, YA 26 kiti, sigorta ve tüm etkinlik malzemeleri dahildir." },
+  },
+
+  schedule: {
+    title:{ en:"Schedule", tr:"Program" },
+    ico:"🗓️",
+    placeholder:true,
+    text:{ en:"The full day-by-day program will appear here as soon as it's confirmed.",
+           tr:"Gün gün tam program, kesinleşir kesinleşmez burada yer alacaktır." },
+  },
+
+  rules: {
+    title:{ en:"Camp rules", tr:"Kamp kuralları" },
+    ico:"📋",
+    intro:{ en:"Please read these before you arrive — they keep everyone safe and the camp running smoothly.",
+            tr:"Lütfen gelmeden önce okuyun — herkesin güvenliği ve kampın düzeni için önemlidir." },
+    list:[
+      { t:{en:"Cleanliness",tr:"Temizlik"}, d:{en:"Dispose of all trash in designated bins; keep nature clean.",tr:"Tüm çöpleri belirlenen kutulara atın; doğayı temiz tutun."} },
+      { t:{en:"Staff orders",tr:"Personel talimatları"}, d:{en:"Follow all team and staff instructions.",tr:"Tüm ekip ve personel talimatlarına uyun."} },
+      { t:{en:"Water & terrain",tr:"Su ve arazi"}, d:{en:"Watch your step; no running near water, diving, or pushing.",tr:"Adımlarınıza dikkat edin; su kenarında koşmak, suya atlamak veya birini itmek yasaktır."} },
+      { t:{en:"No open fires",tr:"Açık ateş yasağı"}, d:{en:"Only authorized staff may light campfires.",tr:"Yalnızca yetkili personel kamp ateşi yakabilir."} },
+      { t:{en:"Quiet hours",tr:"Sessizlik saatleri"}, d:{en:"Strictly respect resting times.",tr:"Dinlenme saatlerine kesinlikle uyun."} },
+      { t:{en:"Camp boundaries",tr:"Kamp sınırları"}, d:{en:"Stay within marked zones; off-limits areas are forbidden.",tr:"İşaretli alanların dışına çıkmayın; yasak bölgelere girmek yasaktır."} },
+      { t:{en:"Substance ban",tr:"Madde yasağı"}, d:{en:"Zero tolerance for alcohol, drugs, or vapes; smoke only in designated spots.",tr:"Alkol, uyuşturucu veya elektronik sigaraya sıfır tolerans; sigara yalnızca belirlenen alanlarda içilebilir."} },
+      { t:{en:"Modesty & tents",tr:"Mahremiyet ve çadırlar"}, d:{en:"No public displays of affection; male and female sleeping areas are strictly single-gender.",tr:"Ortak alanda romantik yakınlaşma yasaktır; kadın ve erkek uyuma alanları tamamen ayrıdır."} },
+      { t:{en:"No electronics in tents",tr:"Çadırlarda elektronik yasağı"}, d:{en:"Using any electronic device inside the tents is strictly prohibited.",tr:"Çadır içinde her türlü elektronik cihazın kullanımı kesinlikle yasaktır."} },
+      { t:{en:"Dress code",tr:"Kıyafet kuralı"}, d:{en:"Wear modest clothes; no crop tops, very short items, or see-through/white fabrics.",tr:"Sade ve uygun kıyafetler giyin; crop top, çok kısa giysiler veya şeffaf/beyaz kumaşlar giymek yasaktır."} },
+      { t:{en:"Night safety",tr:"Gece güvenliği"}, d:{en:"Never walk alone after dark; move with a same-gender buddy.",tr:"Hava karardıktan sonra asla yalnız yürümeyin; hemcinsiniz olan bir arkadaşla hareket edin."} },
+      { t:{en:"Behavior",tr:"Davranış"}, d:{en:"Zero tolerance for bullying, harassment, verbal abuse, or rough play/fighting.",tr:"Zorbalık, taciz, sözlü şiddet, kaba oyunlar veya kavgalara sıfır tolerans."} },
+      { t:{en:"Food",tr:"Yemek"}, d:{en:"Eat only in dining areas; no food inside tents.",tr:"Yalnızca yemek alanlarında yiyin; çadırlarda yiyecek bulundurmak yasaktır."} },
+      { t:{en:"Participation",tr:"Katılım"}, d:{en:"Attend all scheduled group activities; no skipping or staying in tents.",tr:"Planlanan tüm grup etkinliklerine katılın; etkinliklerden kaçmak veya çadırda kalmak yasaktır."} },
+      { t:{en:"Emergency",tr:"Acil durum"}, d:{en:"In any emergency, immediately notify authorized staff and go to the assembly area.",tr:"Olası bir acil durumda derhal yetkili personele haber verin ve güvenli toplanma alanına geçin."} },
+    ],
+  },
+
+  packing: {
+    title:{ en:"Packing list", tr:"Eşya listesi" },
+    ico:"🎒",
+    intro:{ en:"Suggested, not obligatory — but missing some of these can affect your experience. Metric of a good camper: dry socks.",
+            tr:"Zorunlu değil, önerilir — ancak bazılarının eksikliği deneyiminizi etkileyebilir." },
+    groups:[
+      { name:{en:"Documents",tr:"Belgeler"}, items:[
+        {en:"ID (Kimlik) / Passport",tr:"Kimlik / Pasaport"},
+        {en:"Travel authorization (for foreigners and/or refugees)",tr:"Seyahat izin belgesi (yabancılar ve/veya sığınmacılar için)"},
+        {en:"Signed Participant Agreement & Liability Waiver",tr:"İmzalanmış Katılımcı Sözleşmesi ve Sorumluluk Feragatnamesi"},
+      ]},
+      { name:{en:"Sleep & shelter",tr:"Uyku & barınma"}, items:[
+        {en:"Thermal sleeping pad / mat / sleeping bag",tr:"Termal mat / kamp matı / uyku tulumu"},
+        {en:"Blanket",tr:"Battaniye"},
+        {en:"Small pillow (optional)",tr:"Küçük yastık (opsiyonel)"},
+        {en:"Plastic sheet to cover the mattress",tr:"Yatağı örtmek için plastik örtü"},
+        {en:"Appropriate sleepwear",tr:"Uygun uyku kıyafetleri"},
+      ]},
+      { name:{en:"Clothing & accessories",tr:"Giyim & aksesuar"}, items:[
+        {en:"Daily clothes (comfy t-shirts, pants, shorts)",tr:"Günlük kıyafetler (rahat tişört, pantolon, şort)"},
+        {en:"Activity clothes",tr:"Aktivite kıyafetleri"},
+        {en:"Clothes you don't mind getting dirty",tr:"Kirlenmesini göze alacağınız kıyafetler"},
+        {en:"Warm clothes / jacket (essential for the night)",tr:"Sıcak kıyafet / ceket (gece için elzem)"},
+        {en:"Light raincoat or windbreaker (optional)",tr:"Hafif yağmurluk veya rüzgarlık (opsiyonel)"},
+        {en:"Swimwear (optional)",tr:"Mayo (opsiyonel)"},
+        {en:"Closed-toe shoes (sneakers)",tr:"Kapalı burunlu ayakkabı (spor ayakkabı)"},
+        {en:"Flip-flops / sandals (for the shower)",tr:"Terlik / sandalet (duş için)"},
+        {en:"Long socks (protect from forest bugs)",tr:"Uzun çorap (orman böceklerine karşı)"},
+        {en:"Underwear",tr:"İç çamaşırı"},
+        {en:"Cap / hat (optional)",tr:"Kep / şapka (opsiyonel)"},
+        {en:"Sunglasses (optional)",tr:"Güneş gözlüğü (opsiyonel)"},
+        {en:"Hand warmers (optional)",tr:"El ısıtıcıları (opsiyonel)"},
+      ]},
+      { name:{en:"Hygiene & health",tr:"Hijyen & sağlık"}, items:[
+        {en:"Hygiene kit (toothbrush, toothpaste, soap, shampoo, deodorant)",tr:"Hijyen kiti (diş fırçası, macun, sabun, şampuan, deodorant)"},
+        {en:"Towel (girls: an extra one for hair)",tr:"Havlu (kızlar: saç için ekstra bir tane)"},
+        {en:"Sunscreen & insect repellent",tr:"Güneş kremi & böcek kovucu"},
+        {en:"Personal medication (if you need it)",tr:"Kişisel ilaçlar (ihtiyacı olanlar için)"},
+        {en:"Wet wipes (a lifesaver at camp)",tr:"Islak mendil (kampta hayat kurtarır)"},
+        {en:"Feminine hygiene products",tr:"Kadın hijyen ürünleri"},
+        {en:"Extra toilet paper (optional)",tr:"Yedek tuvalet kağıdı (opsiyonel)"},
+        {en:"Band-Aids (optional)",tr:"Yara bandı (opsiyonel)"},
+      ]},
+      { name:{en:"Electronics",tr:"Elektronik"}, items:[
+        {en:"Power bank (optional)",tr:"Powerbank (opsiyonel)"},
+        {en:"Charging cables & wall adapters",tr:"Şarj kabloları & adaptörler"},
+        {en:"Extension cord (optional)",tr:"Uzatma kablosu (opsiyonel)"},
+        {en:"Flashlight / headlamp (phone light works too)",tr:"El feneri / kafa feneri (telefon feneri de olur)"},
+        {en:"Earplugs & sleep mask (optional)",tr:"Kulak tıkacı & uyku bandı (opsiyonel)"},
+      ]},
+      { name:{en:"Food & utilities",tr:"Yiyecek & gereçler"}, items:[
+        {en:"Water bottle (reusable metal preferred)",tr:"Su şişesi (tercihen tekrar kullanılabilir metal)"},
+        {en:"Cup, plate & fork — metal or plastic, no glass (optional)",tr:"Bardak, tabak & çatal — metal ya da plastik, cam değil (opsiyonel)"},
+        {en:"Quick snacks (bars, nuts, cookies) (optional)",tr:"Atıştırmalık (bar, kuruyemiş, bisküvi) (opsiyonel)"},
+        {en:"Small camping chair (optional)",tr:"Küçük kamp sandalyesi (opsiyonel)"},
+        {en:"Picnic mat (optional)",tr:"Piknik matı (opsiyonel)"},
+        {en:"Small daypack / drawstring bag",tr:"Küçük günlük sırt çantası / ipli çanta"},
+        {en:"String / clothesline (to hang wet towels)",tr:"İp / çamaşır ipi (ıslak havluları asmak için)"},
+        {en:"Trash bags (for dirty clothes)",tr:"Çöp poşetleri (kirli kıyafetler için)"},
+      ]},
+    ],
+    tip:{ en:"Pro-tip: line your backpack with a trash bag and pack your clothes inside it — keeps everything dry and clean.",
+          tr:"İpucu: sırt çantanızın içine bir çöp poşeti serip kıyafetlerinizi içine koyun — her şey kuru ve temiz kalır." },
+  },
+
+  dont: {
+    title:{ en:"What NOT to bring", tr:"Getirilmemesi gerekenler" },
+    ico:"🚫",
+    items:[
+      {en:"Bad attitude or indisposition — bring your best energy!",tr:"Kötü tutum veya isteksizlik — en iyi enerjinizi getirin!"},
+      {en:"Kids of any age — the place isn't adapted for little ones",tr:"Her yaştan çocuk — alan küçükler için uygun değil"},
+      {en:"Air mattress / heavy mattress",tr:"Şişme yatak / ağır yatak"},
+      {en:"Hairdryer, flat iron, curling iron",tr:"Saç kurutma makinesi, düzleştirici, maşa"},
+      {en:"Alcoholic beverages",tr:"Alkollü içecekler"},
+      {en:"Matches, fireworks, or flammable items",tr:"Kibrit, havai fişek veya yanıcı maddeler"},
+      {en:"Illicit items or substances",tr:"Yasadışı maddeler veya unsurlar"},
+      {en:"Expensive jewelry or unnecessary valuables",tr:"Pahalı mücevher veya gereksiz değerli eşyalar"},
+      {en:"Personal Bluetooth speakers",tr:"Kişisel Bluetooth hoparlörler"},
+      {en:"Large cameras, lights, drones or photography gear (our team's got the photos covered)",tr:"Büyük kamera, ışık, dron veya fotoğraf ekipmanı (ekibimiz fotoğrafları hallediyor)"},
+      {en:"Large knives, pocket knives, axes or other weapons",tr:"Büyük bıçak, çakı, balta veya diğer silahlar"},
+    ],
+  },
+
+  transport: {
+    title:{ en:"Transportation", tr:"Ulaşım" },
+    ico:"🚆",
+    intro:{ en:"Transport costs are covered individually. Buy train tickets early — they sell out faster than buses.",
+            tr:"Ulaşım masrafları bireysel karşılanır. Tren biletlerini erken alın — otobüslerden daha hızlı tükenir." },
+    steps:[
+      { b:{en:"Arrive",tr:"Varış"}, t:{en:"Friday 18 Sep — arrive in Sapanca by 10–11 AM.",tr:"18 Eylül Cuma — Sapanca'ya 10–11 civarı varın."} },
+      { b:{en:"Return",tr:"Dönüş"}, t:{en:"Sunday 20 Sep — leave Sapanca after 4 PM (book the return ticket in advance).",tr:"20 Eylül Pazar — Sapanca'dan 16:00'dan sonra ayrılın (dönüş biletini önceden alın)."} },
+      { b:{en:"Transfer",tr:"Transfer"}, t:{en:"A shuttle from the train station / bus stop may be arranged — details in the participant group.",tr:"Tren istasyonu / otobüs durağından transfer ayarlanabilir — ayrıntılar katılımcı grubunda."} },
+    ],
+    note:{ en:"A dedicated transport document will be added here once shared.",
+           tr:"Paylaşıldığında ayrıntılı bir ulaşım belgesi buraya eklenecektir." },
+  },
+
+  music: {
+    title:{ en:"Music & songs", tr:"Müzik & şarkılar" },
+    ico:"🎵",
+    placeholder:true,
+    text:{ en:"The camp songs and lyrics will be collected here so you can sing along.",
+           tr:"Kamp şarkıları ve sözleri, birlikte söyleyebilmeniz için burada toplanacaktır." },
+  },
+
+  notes: {
+    title:{ en:"Good to know", tr:"Bilinmesi gereken" },
+    ico:"💡",
+    items:[
+      { t:{en:"💧 Water bottle",tr:"💧 Su şişesi"}, d:{en:"Bring your own reusable bottle — bottled water is NOT provided at the campground. Metal is best for nature.",tr:"Kendi tekrar kullanılabilir şişenizi getirin — kampta pet su verilmeyecek. Doğa için metal en iyisi."} },
+      { t:{en:"🍪 Snacks",tr:"🍪 Atıştırmalık"}, d:{en:"There's no supermarket at the campground. If you're picky, bring snacks for the two days.",tr:"Kampta market yok. Seçiciyseniz iki gün için atıştırmalık getirin."} },
+      { t:{en:"🦟 Bug spray",tr:"🦟 Böcek spreyi"}, d:{en:"No need for one each — one bottle can be shared between several friends.",tr:"Herkese bir tane gerekmez — bir şişe birkaç arkadaş arasında paylaşılabilir."} },
+      { t:{en:"🍴 Cups & cutlery",tr:"🍴 Bardak & çatal"}, d:{en:"Optional. Metal preferred, plastic is fine — reusable makes the camp experience fuller.",tr:"Opsiyonel. Metal tercih edilir, plastik de olur — tekrar kullanılabilir olan daha iyi."} },
+      { t:{en:"🍽️ Meals & diet",tr:"🍽️ Yemek & diyet"}, d:{en:"7 meals included. Vegetarian, vegan and allergen-free options on request — note it on the registration form.",tr:"7 öğün dahil. Talebe göre vejetaryen, vegan ve alerjensiz seçenekler — kayıt formunda belirtin."} },
+      { t:{en:"⛑️ Health",tr:"⛑️ Sağlık"}, d:{en:"The team is ready for emergencies; serious cases get transport to the nearest hospital. Insurance covers the event period.",tr:"Ekip acil durumlara hazır; ciddi durumlarda en yakın hastaneye ulaşım sağlanır. Sigorta etkinlik süresini kapsar."} },
+    ],
+  },
+
+  contact: {
+    title:{ en:"Contact & registration", tr:"İletişim & kayıt" },
+    ico:"📞",
+    links:[
+      { ico:"📝", href:"https://forms.gle/eztjisRnFT7jb3Uh7", t:{en:"Pre-registration form",tr:"Ön kayıt formu"}, s:{en:"forms.gle · register early, spots are limited",tr:"forms.gle · erken kaydolun, yer sınırlı"} },
+      { ico:"📸", href:"https://www.instagram.com/youth.alivetr/", t:{en:"@youth.alivetr",tr:"@youth.alivetr"}, s:{en:"Youth Alive on Instagram",tr:"Instagram'da Youth Alive"} },
+      { ico:"⛺", href:"https://www.instagram.com/vadicamping/", t:{en:"@vadicamping",tr:"@vadicamping"}, s:{en:"The campground",tr:"Kamp alanı"} },
+    ],
+    note:{ en:"Questions? Ask in the WhatsApp participant group — Esau and the team are there to help.",
+           tr:"Sorularınız mı var? WhatsApp katılımcı grubunda sorun — Esau ve ekip yardıma hazır." },
+  },
+};
+
+/* ---------- rendering ---------- */
+let lang = localStorage.getItem("ya-lang");
+if (!["en","tr"].includes(lang)){
+  lang = (navigator.language||"").toLowerCase().startsWith("tr") ? "tr" : "en";
+}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const L = o => esc(o[lang]);
+
+function sectionShell(id, ico, title, inner, noteHtml){
+  return `<section class="card" id="${id}">
+    <div class="sec-head"><div class="sec-ico">${ico}</div><h2 class="sec-title">${title}</h2></div>
+    ${inner}
+    ${noteHtml||""}
+  </section>`;
+}
+
+function renderFacts(d){
+  const facts = d.items.map(i=>`<div class="fact"><div class="k">${L(i.k)}</div><div class="v">${L(i.v)}</div></div>`).join("");
+  return sectionShell("facts", d.ico, L(d.title),
+    `<div class="facts">${facts}</div>`,
+    `<div class="tip">${L(d.note)}</div>`);
+}
+
+function renderPlaceholder(id, d){
+  return sectionShell(id, d.ico, `${L(d.title)}<span class="soon">${L(UI.soon)}</span>`,
+    `<div class="callout">${L(d.text)}</div>`);
+}
+
+function renderRules(d){
+  const lis = d.list.map(r=>`<li><div><span class="rule-t">${L(r.t)}.</span> <span class="rule-d">${L(r.d)}</span></div></li>`).join("");
+  return sectionShell("rules", d.ico, L(d.title),
+    `<p class="intro">${L(d.intro)}</p><ol class="rules">${lis}</ol>`);
+}
+
+function renderPacking(d){
+  const groups = d.groups.map((g,idx)=>{
+    const items = g.items.map(i=>`<li>${L(i)}</li>`).join("");
+    return `<details class="acc" ${idx===0?"open":""}>
+      <summary>${L(g.name)} <span class="caret">▾</span></summary>
+      <div class="body"><ul class="check">${items}</ul></div>
+    </details>`;
+  }).join("");
+  return sectionShell("packing", d.ico, L(d.title),
+    `<p class="intro">${L(d.intro)}</p>${groups}<div class="tip">${L(d.tip)}</div>`);
+}
+
+function renderDont(d){
+  const items = d.items.map(i=>`<li>${L(i)}</li>`).join("");
+  return sectionShell("dont", d.ico, L(d.title), `<ul class="no">${items}</ul>`);
+}
+
+function renderTransport(d){
+  const steps = d.steps.map(s=>`<div class="tstep"><span class="badge">${L(s.b)}</span><div>${L(s.t)}</div></div>`).join("");
+  return sectionShell("transport", d.ico, L(d.title),
+    `<p class="intro">${L(d.intro)}</p><div class="tline">${steps}</div>`,
+    `<div class="callout">${L(d.note)}</div>`);
+}
+
+function renderNotes(d){
+  const items = d.items.map(i=>`<div class="tip"><b>${L(i.t)}</b><br>${L(i.d)}</div>`).join("");
+  return sectionShell("notes", d.ico, L(d.title), items);
+}
+
+function renderContact(d){
+  const links = d.links.map(l=>`<a class="linkbtn" href="${esc(l.href)}" target="_blank" rel="noopener">
+      <span class="lico">${l.ico}</span><span>${L(l.t)}<span class="lsub">${L(l.s)}</span></span></a>`).join("");
+  return sectionShell("contact", d.ico, L(d.title),
+    `<div class="links">${links}</div>`,
+    `<div class="tip">${L(d.note)}</div>`);
+}
+
+function render(){
+  document.documentElement.lang = lang;
+  // hero i18n bits
+  const heroTxt = {
+    tagline:{en:"Bound by Love",tr:"Sevgiyle Birleşen"},
+    heroDates:{en:"18–20 September 2026",tr:"18–20 Eylül 2026"},
+    heroLoc:{en:"Sapanca, Sakarya",tr:"Sapanca, Sakarya"},
+    footer:{en:"Youth Alive 26 · See you at camp",tr:"Youth Alive 26 · Kampta görüşürüz"},
+  };
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if (heroTxt[k]) el.textContent = heroTxt[k][lang];
+  });
+  // toggle state
+  document.getElementById("btn-en").setAttribute("aria-pressed", lang==="en");
+  document.getElementById("btn-tr").setAttribute("aria-pressed", lang==="tr");
+
+  // nav chips
+  document.getElementById("chips").innerHTML = DATA.nav.map(n=>
+    `<a class="chip" href="#${n.id}" data-target="${n.id}">${n.ico} ${n[lang]}</a>`).join("");
+
+  // sections (order matches nav)
+  document.getElementById("main").innerHTML =
+    renderFacts(DATA.facts) +
+    renderPlaceholder("schedule", DATA.schedule) +
+    renderRules(DATA.rules) +
+    renderPacking(DATA.packing) +
+    renderDont(DATA.dont) +
+    renderTransport(DATA.transport) +
+    renderPlaceholder("music", DATA.music) +
+    renderNotes(DATA.notes) +
+    renderContact(DATA.contact);
+
+  setupScrollSpy();
+}
+
+function setLang(l){
+  lang = l;
+  localStorage.setItem("ya-lang", l);
+  render();
+}
+
+/* highlight active nav chip while scrolling */
+let spyObserver;
+function setupScrollSpy(){
+  if (spyObserver) spyObserver.disconnect();
+  const chips = [...document.querySelectorAll(".chip")];
+  spyObserver = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        chips.forEach(c=>c.classList.toggle("active", c.dataset.target===e.target.id));
+      }
+    });
+  }, { rootMargin:"-45% 0px -50% 0px", threshold:0 });
+  document.querySelectorAll("section.card").forEach(s=>spyObserver.observe(s));
+}
+
+render();
+
+/* service worker for offline use */
+if ("serviceWorker" in navigator){
+  window.addEventListener("load", ()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
