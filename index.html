@@ -4,11 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#2C2A8E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Youth Alive 26">
+<meta name="format-detection" content="telephone=no">
 <title>Youth Alive 26 — Summer Camp</title>
 <meta name="description" content="Everything you need for Youth Alive 26 Summer Camp — rules, packing list, transportation, schedule and more. All in one place.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
@@ -36,13 +41,26 @@
   a{color:var(--indigo);font-weight:700}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
 
+  /* ---------- Mobile-first base ---------- */
+  html,body{overflow-x:hidden;overscroll-behavior-y:none}
+  *{-webkit-tap-highlight-color:transparent}
+  button,a,.chip,summary{touch-action:manipulation}
+  img,svg{max-width:100%}
+  /* comfortable tap feedback */
+  .chip:active,.linkbtn:active,.lang button:active,.ib-install:active,.ib-x:active{transform:scale(.96)}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  }
+
   /* ---------- Decorative silhouettes ---------- */
   .silhouette{position:fixed;left:0;right:0;bottom:0;width:100%;z-index:0;pointer-events:none;opacity:.9;line-height:0}
   .silhouette svg{width:100%;height:auto;display:block}
   .content{position:relative;z-index:1}
 
   /* ---------- Hero ---------- */
-  header.hero{position:relative;text-align:center;padding:34px 16px 20px;overflow:hidden}
+  header.hero{position:relative;text-align:center;overflow:hidden;
+    padding:calc(30px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 20px calc(16px + env(safe-area-inset-left))}
   .flame{font-size:0;line-height:0}
   .flame svg{width:52px;height:52px;filter:drop-shadow(0 4px 0 rgba(44,42,142,.25))}
   .brand{
@@ -77,12 +95,15 @@
   nav.chips{position:sticky;top:0;z-index:20;background:rgba(255,210,63,.92);
     backdrop-filter:blur(8px);border-bottom:2px solid rgba(44,42,142,.15);
     margin-top:16px}
-  .chips-inner{display:flex;gap:8px;overflow-x:auto;padding:11px 16px;
-    max-width:var(--maxw);margin:0 auto;scrollbar-width:none}
+  .chips-inner{display:flex;gap:8px;overflow-x:auto;
+    padding:10px calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left));
+    max-width:var(--maxw);margin:0 auto;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
   .chips-inner::-webkit-scrollbar{display:none}
   .chip{white-space:nowrap;flex:0 0 auto;font-family:"Fredoka",sans-serif;font-weight:600;
-    font-size:14px;background:#fff;color:var(--indigo);border:2px solid var(--indigo);
-    border-radius:999px;padding:6px 14px;cursor:pointer;text-decoration:none;transition:.15s}
+    font-size:14.5px;background:#fff;color:var(--indigo);border:2px solid var(--indigo);
+    border-radius:999px;padding:9px 15px;min-height:40px;display:inline-flex;align-items:center;
+    scroll-snap-align:start;cursor:pointer;text-decoration:none;transition:.15s}
   .chip:hover{background:var(--indigo);color:#fff}
   .chip.active{background:var(--indigo);color:#fff}
 
@@ -157,7 +178,31 @@
   .linkbtn .lico{font-size:22px}
   .lsub{display:block;font-weight:600;color:var(--muted);font-size:13px}
 
-  footer{text-align:center;color:var(--indigo);font-weight:700;padding:6px 16px 30px;position:relative;z-index:1}
+  /* ---------- Install (Add to Home Screen) banner ---------- */
+  .install-banner{position:fixed;left:8px;right:8px;bottom:8px;z-index:60;max-width:500px;margin:0 auto;
+    background:#fff;border:2px solid var(--indigo);border-radius:20px;
+    box-shadow:0 16px 40px rgba(44,42,142,.35);
+    padding:14px 14px calc(14px + env(safe-area-inset-bottom));
+    transform:translateY(140%);opacity:0;transition:transform .34s cubic-bezier(.2,.75,.2,1),opacity .3s}
+  .install-banner.visible{transform:translateY(0);opacity:1}
+  .ib-row{display:flex;align-items:center;gap:12px}
+  .ib-ico{width:48px;height:48px;flex:0 0 auto;border-radius:13px}
+  .ib-txt{flex:1;min-width:0}
+  .ib-txt strong{display:block;color:var(--indigo);font-family:"Fredoka",sans-serif;font-weight:700;font-size:16px;line-height:1.2}
+  .ib-txt span{display:block;color:var(--muted);font-size:13px;line-height:1.35;margin-top:2px}
+  .ib-x{flex:0 0 auto;width:36px;height:36px;border:0;background:var(--soft);border-radius:50%;
+    font-size:22px;color:var(--muted);cursor:pointer;line-height:1;display:grid;place-items:center}
+  .ib-install{width:100%;min-height:50px;margin-top:12px;border:0;border-radius:14px;
+    background:var(--indigo);color:#fff;font-family:"Fredoka",sans-serif;font-weight:600;font-size:16px;
+    cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+  .ib-ios{margin-top:12px;background:var(--soft);border-radius:14px;padding:12px 14px;
+    color:var(--ink);font-size:14px;line-height:1.45;display:flex;gap:10px;align-items:flex-start}
+  .ib-ios[hidden]{display:none}
+  .ib-ios .shareico{flex:0 0 auto;margin-top:1px}
+  .ib-ios b{color:var(--indigo)}
+
+  footer{text-align:center;color:var(--indigo);font-weight:700;position:relative;z-index:1;
+    padding:6px 16px calc(30px + env(safe-area-inset-bottom))}
   footer .heart{color:#d23b3b}
 </style>
 </head>
@@ -218,6 +263,16 @@ const UI = {
   soon:      { en:"Coming soon", tr:"Yakında" },
   seeGroup:  { en:"More details will be shared in the WhatsApp participant group.",
                tr:"Daha fazla ayrıntı WhatsApp katılımcı grubunda paylaşılacaktır." },
+  install: {
+    title:   { en:"Add to Home Screen", tr:"Ana Ekrana Ekle" },
+    body:    { en:"Install Youth Alive 26 for one-tap, offline access at camp.",
+               tr:"Kampta tek dokunuşla, çevrimdışı erişim için Youth Alive 26'yı yükleyin." },
+    btn:     { en:"Install app", tr:"Uygulamayı yükle" },
+    iosBtn:  { en:"How to add it", tr:"Nasıl eklenir" },
+    iosHint: { en:'Tap the <b>Share</b> button below, then choose <b>"Add to Home Screen"</b>.',
+               tr:'Aşağıdaki <b>Paylaş</b> düğmesine dokunun, ardından <b>"Ana Ekrana Ekle"</b>yi seçin.' },
+    dismiss: { en:"Dismiss", tr:"Kapat" },
+  },
 };
 
 const DATA = {
@@ -522,10 +577,13 @@ function render(){
   setupScrollSpy();
 }
 
+let refreshInstall = ()=>{};   // reassigned by the install banner once it exists
+
 function setLang(l){
   lang = l;
   localStorage.setItem("ya-lang", l);
   render();
+  refreshInstall();
 }
 
 /* highlight active nav chip while scrolling */
@@ -549,6 +607,100 @@ render();
 if ("serviceWorker" in navigator){
   window.addEventListener("load", ()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 }
+
+/* ---------- Add-to-Home-Screen banner (Android + iOS) ---------- */
+(function initInstall(){
+  const params      = new URLSearchParams(location.search);
+  const forcePreview= params.get("install") === "1";           // ?install=1 to preview anywhere
+  const isStandalone= matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  if (isStandalone) return;                                     // already installed
+  if (!forcePreview && localStorage.getItem("ya-install-dismissed")) return; // don't nag
+
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const shareIcon = '<svg class="shareico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2C2A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M6 12H5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2h-1"/></svg>';
+  let deferred = null;   // Android beforeinstallprompt event
+  let banner   = null;
+
+  const T = k => UI.install[k][lang];
+  const nativeMode = () => !!deferred;   // Android prompt available
+
+  function paint(){
+    if (!banner) return;
+    banner.innerHTML =
+      `<div class="ib-row">
+         <img class="ib-ico" src="icon-192.png" alt="">
+         <div class="ib-txt"><strong>${esc(T("title"))}</strong><span>${esc(T("body"))}</span></div>
+         <button class="ib-x" type="button" aria-label="${esc(T("dismiss"))}">&times;</button>
+       </div>
+       <button class="ib-install" type="button">${esc(nativeMode() ? T("btn") : T("iosBtn"))}</button>
+       <div class="ib-ios" hidden>${shareIcon}<div>${T("iosHint")}</div></div>`;
+    banner.querySelector(".ib-x").onclick = dismiss;
+    banner.querySelector(".ib-install").onclick = onInstall;
+  }
+
+  function build(){
+    if (banner) return;
+    banner = document.createElement("div");
+    banner.className = "install-banner";
+    banner.setAttribute("role","dialog");
+    banner.setAttribute("aria-label","Install app");
+    document.body.appendChild(banner);
+    paint();
+    refreshInstall = ()=>{ if (banner) paint(); };   // keep text in sync with EN/TR toggle
+  }
+
+  function show(){
+    build();
+    if (forcePreview && !nativeMode()) banner.querySelector(".ib-ios").hidden = false; // full preview
+    requestAnimationFrame(()=>{
+      banner.classList.add("visible");
+      // make sure the banner never hides the last section
+      document.body.style.paddingBottom = (banner.offsetHeight + 20) + "px";
+    });
+  }
+
+  function hide(){
+    if (!banner) return;
+    banner.classList.remove("visible");
+    document.body.style.paddingBottom = "";
+  }
+
+  function dismiss(){
+    hide();
+    if (!forcePreview) localStorage.setItem("ya-install-dismissed", "1");
+  }
+
+  async function onInstall(){
+    if (nativeMode()){
+      deferred.prompt();
+      try { await deferred.userChoice; } catch(e){}
+      deferred = null;
+      hide();
+    } else {
+      // iOS / preview: reveal the manual instructions
+      const hint = banner.querySelector(".ib-ios");
+      hint.hidden = !hint.hidden;
+      document.body.style.paddingBottom = (banner.offsetHeight + 20) + "px";
+    }
+  }
+
+  window.addEventListener("beforeinstallprompt", e=>{
+    e.preventDefault();
+    deferred = e;
+    paint();          // switch button label to native "Install app"
+    show();
+  });
+  window.addEventListener("appinstalled", ()=>{
+    deferred = null;
+    localStorage.setItem("ya-install-dismissed", "1");
+    hide();
+  });
+
+  // iOS never fires beforeinstallprompt → offer manual instructions after a short beat.
+  if (isIOS || forcePreview){
+    setTimeout(show, forcePreview ? 300 : 1500);
+  }
+})();
 </script>
 </body>
 </html>
