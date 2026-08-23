@@ -182,6 +182,13 @@
   .tip b{color:var(--ink);font-weight:700}
   .tip+.tip{margin-top:8px}
 
+  /* music playlists */
+  .pl{margin:0 0 16px}
+  .pl:last-child{margin-bottom:0}
+  .pl-cap{font-weight:700;color:var(--indigo);font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.5px;margin:0 0 8px}
+  .spotify{width:100%;border:0;border-radius:14px;display:block}
+
   /* transport steps */
   .tline{display:grid;gap:0}
   .tstep{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -326,7 +333,7 @@ const DATA = {
     { id:"packing",   en:"Packing list", tr:"Eşya listesi", he:"What to bring",       ht:"Ne getirmeli" },
     { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
     { id:"transport", en:"Transport",    tr:"Ulaşım",       he:"Getting there",       ht:"Nasıl gidilir" },
-    { id:"music",     en:"Music",        tr:"Müzik",        he:"Songs & lyrics",      ht:"Şarkı & sözler", soon:true },
+    { id:"music",     en:"Music",        tr:"Müzik",        he:"Songs & lyrics",      ht:"Şarkı & sözler" },
     { id:"notes",     en:"Notes",        tr:"Notlar",       he:"Good to know",        ht:"Faydalı bilgiler" },
     { id:"contact",   en:"Contact",      tr:"İletişim",     he:"Register & ask",      ht:"Kayıt & iletişim" },
   ],
@@ -477,10 +484,12 @@ const DATA = {
 
   music: {
     title:{ en:"Music & songs", tr:"Müzik & şarkılar" },
-    ico:"🎵",
-    placeholder:true,
-    text:{ en:"The camp songs and lyrics will be collected here so you can sing along.",
-           tr:"Kamp şarkıları ve sözleri, birlikte söyleyebilmeniz için burada toplanacaktır." },
+    intro:{ en:"Get in the mood for camp — press play and get to know this year's songs before you arrive.",
+            tr:"Kamp havasına girin — çalın ve gelmeden önce bu yılın şarkılarını tanıyın." },
+    playlists:[
+      { id:"16HT6GnaHvo4XwFwBeIog5", en:"Bound by Love · English", tr:"Bound by Love · İngilizce" },
+      { id:"272Xp3U6OykjKY1TxqV8UY", en:"Sevgiyle Birleşen · Turkish", tr:"Sevgiyle Birleşen · Türkçe" },
+    ],
   },
 
   notes: {
@@ -571,6 +580,18 @@ function renderTransport(d){
     `<div class="callout">${L(d.note)}</div>`);
 }
 
+function renderMusic(d){
+  const lists = d.playlists.map(p=>`
+    <div class="pl">
+      <div class="pl-cap">${L(p)}</div>
+      <iframe class="spotify" title="${L(p)}" loading="lazy" height="352"
+        src="https://open.spotify.com/embed/playlist/${encodeURIComponent(p.id)}?utm_source=generator"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>`).join("");
+  return sectionShell("music", L(d.title),
+    `<p class="intro">${L(d.intro)}</p>${lists}`);
+}
+
 function renderNotes(d){
   const items = d.items.map(i=>`<div class="tip"><b>${L(i.t)}</b><br>${L(i.d)}</div>`).join("");
   return sectionShell("notes", L(d.title), items);
@@ -592,7 +613,7 @@ const SECTION_RENDERERS = {
   packing:   ()=>renderPacking(DATA.packing),
   dont:      ()=>renderDont(DATA.dont),
   transport: ()=>renderTransport(DATA.transport),
-  music:     ()=>renderPlaceholder("music", DATA.music),
+  music:     ()=>renderMusic(DATA.music),
   notes:     ()=>renderNotes(DATA.notes),
   contact:   ()=>renderContact(DATA.contact),
 };
