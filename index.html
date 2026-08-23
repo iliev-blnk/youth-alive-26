@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#2C2A8E">
+<meta name="theme-color" content="#FFB804">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -12,7 +12,7 @@
 <title>Youth Alive 26 — Summer Camp</title>
 <meta name="description" content="Everything you need for Youth Alive 26 Summer Camp — rules, packing list, transportation, schedule and more. All in one place.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,9 +20,9 @@
 <style>
   :root{
     --cream:#FBF6EC; --card:#FFFFFF;
-    --ink:#262437; --muted:#77748A;
-    --indigo:#2C2A8E; --tint:#ECEBF7;
-    --sun:#F7B733; --sun-deep:#F2951E;
+    --ink:#232135; --muted:#736f88;
+    --indigo:#4530E0; --tint:#EDEAFB;
+    --sun:#FFB804; --sun-deep:#F59300;
     --line:#EBE5D6; --soft:#F4EFE3;
     --ok:#1E9E6A; --no:#CE5B4E;
     --radius:20px;
@@ -58,14 +58,11 @@
   header.hero{position:relative;text-align:center;
     background:radial-gradient(135% 130% at 50% -25%, var(--sun) 0%, var(--sun-deep) 80%);
     padding:calc(30px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left))}
-  .flame svg{width:42px;height:42px}
-  .eyebrow{font-weight:700;letter-spacing:3px;text-transform:uppercase;
-    font-size:12px;color:var(--indigo);opacity:.85;margin:6px 0 0}
-  .brand{font-family:"Fraunces",Georgia,serif;font-weight:600;font-optical-sizing:auto;
-    color:var(--indigo);font-size:clamp(38px,10.5vw,62px);line-height:1.0;margin:4px 0 0;letter-spacing:-.5px}
-  .brand em{font-style:italic;font-weight:500}
+  .logo-plate{display:inline-block;background:#fff;border-radius:22px;padding:20px 26px;
+    box-shadow:0 12px 34px rgba(35,33,53,.16);max-width:min(84%,340px)}
+  .logo{display:block;width:100%;height:auto}
   .tagline{font-family:"Fraunces",serif;font-style:italic;font-weight:400;color:var(--indigo);
-    font-size:clamp(15px,4vw,18px);margin:8px 0 0;opacity:.9}
+    font-size:clamp(15px,4vw,18px);margin:14px 0 0}
   .meta{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
   .pill{background:rgba(255,255,255,.92);color:var(--indigo);border-radius:999px;padding:8px 14px;
     font-weight:600;font-size:13.5px;display:inline-flex;gap:6px;align-items:center}
@@ -233,11 +230,7 @@
 
 <div id="home">
 <header class="hero">
-  <div class="flame" aria-hidden="true">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#2C2A8E" stroke="#2C2A8E" stroke-width="1.1" stroke-linejoin="round" d="M12 2c2.5 3 3 5 1.5 6.5C12.8 9.2 12 8.5 12 7c-1.5 1.5-4 4-4 7.5A4 4 0 0 0 12 22a4.2 4.2 0 0 0 4.4-4.2c0-1.2-.4-2-1-2.8.2 1-.4 1.8-1.2 2 .6-1.6.2-3.5-1-5 .2 2-.8 3-1.7 3.2C10 14.5 10 12 12 9.5 14.5 6.7 15 4.5 12 2Z"/></svg>
-  </div>
-  <div class="eyebrow" data-i18n="eyebrow">Summer Camp</div>
-  <h1 class="brand">Youth Alive <em>&rsquo;26</em></h1>
+  <h1 class="logo-plate"><img class="logo" src="logo.png" width="778" height="420" alt="Youth Alive Summer Camp"></h1>
   <div class="tagline" data-i18n="tagline">Bound by Love</div>
   <div class="meta">
     <span class="pill">
@@ -630,13 +623,14 @@ function render(){
 }
 
 /* ---------- view routing: home (tiles) <-> one category ---------- */
-function showHome(){
+function showHome(preserveScroll){
   document.getElementById("detail").hidden = true;
   document.getElementById("home").hidden = false;
-  window.scrollTo(0,0);
+  localStorage.setItem("ya-view", "");
+  if (!preserveScroll) window.scrollTo(0,0);
 }
 
-function showSection(id){
+function showSection(id, preserveScroll){
   const body = SECTION_RENDERERS[id] ? SECTION_RENDERERS[id]() : "";
   document.getElementById("view").innerHTML =
     `<div class="fade">${body}
@@ -647,13 +641,14 @@ function showSection(id){
      </div>`;
   document.getElementById("home").hidden = true;
   document.getElementById("detail").hidden = false;
-  window.scrollTo(0,0);
+  localStorage.setItem("ya-view", id);   // remember where we are
+  if (!preserveScroll) window.scrollTo(0,0);
 }
 
-function route(){
+function route(preserveScroll){
   const id = decodeURIComponent(location.hash.replace(/^#/,""));
-  if (SECTION_RENDERERS[id]) showSection(id);
-  else showHome();
+  if (SECTION_RENDERERS[id]) showSection(id, preserveScroll);
+  else showHome(preserveScroll);
 }
 
 function goHome(){
@@ -666,12 +661,25 @@ let refreshInstall = ()=>{};   // reassigned by the install banner once it exist
 function setLang(l){
   lang = l;
   localStorage.setItem("ya-lang", l);
+  // keep the reading position and any open accordions across the language swap
+  const y = window.scrollY;
+  const openIdx = [...document.querySelectorAll("#view details.acc")]
+    .map((d,i)=> d.open ? i : -1).filter(i=> i>=0);
   render();
-  route();          // re-render the current view in the new language
+  route(true);
+  const accs = document.querySelectorAll("#view details.acc");
+  openIdx.forEach(i=>{ if (accs[i]) accs[i].open = true; });
+  window.scrollTo(0, y);
   refreshInstall();
 }
 
-window.addEventListener("hashchange", route);
+window.addEventListener("hashchange", ()=>route());
+
+// Restore the last-viewed category (persists across reloads / closing the tab).
+if (!location.hash){
+  const saved = localStorage.getItem("ya-view");
+  if (saved && SECTION_RENDERERS[saved]) history.replaceState(null, "", "#"+saved);
+}
 render();
 route();
 

@@ -16,7 +16,8 @@ across WhatsApp messages.
 | `index.html` | The whole app — layout, styles, and **all content** live here (in the `DATA` object). |
 | `manifest.webmanifest` | PWA metadata (name, colors, icon). |
 | `sw.js` | Service worker — caches the page for offline use. |
-| `icon.svg` | Favicon / home-screen icon. |
+| `logo.png` | Youth Alive Summer Camp logo (used in the hero). |
+| `icon-192.png` / `icon-512.png` / `apple-touch-icon.png` | App / home-screen icons (flame emblem on brand gold). |
 | `vercel.json` | Vercel config (`cleanUrls`). |
 
 ## Updating the content
