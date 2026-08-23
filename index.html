@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#FFB804">
+<meta name="theme-color" content="#FFB701">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -22,9 +22,9 @@
     --cream:#FBF6EC; --card:#FFFFFF;
     --ink:#232135; --muted:#736f88;
     --indigo:#4530E0; --tint:#EDEAFB;
-    --sun:#FFB804; --sun-deep:#F59300;
+    --sun:#FFB701; --sun-lite:#FFC64A;
     --line:#EBE5D6; --soft:#F4EFE3;
-    --ok:#1E9E6A; --no:#CE5B4E;
+    --ok:#4530E0; --no:#736f88;
     --radius:20px;
     --shadow:0 6px 22px rgba(38,36,80,.05), 0 1px 2px rgba(38,36,80,.04);
     --maxw:760px;
@@ -56,7 +56,7 @@
 
   /* ---------- Hero ---------- */
   header.hero{position:relative;text-align:center;
-    background:radial-gradient(135% 130% at 50% -25%, var(--sun) 0%, var(--sun-deep) 80%);
+    background:radial-gradient(135% 130% at 50% -22%, var(--sun-lite) 0%, var(--sun) 74%);
     padding:calc(30px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left))}
   .logo-plate{display:inline-block;background:#fff;border-radius:22px;padding:20px 26px;
     box-shadow:0 12px 34px rgba(35,33,53,.16);max-width:min(84%,340px)}
@@ -174,7 +174,7 @@
     background:var(--no);border-radius:2px}
 
   /* callout / placeholder */
-  .callout{background:var(--soft);border:1px dashed rgba(242,149,30,.5);
+  .callout{background:var(--soft);border:1px dashed rgba(255,183,1,.75);
     border-radius:14px;padding:16px;color:var(--muted);font-size:15px}
   .soon{display:inline-block;background:var(--tint);color:var(--indigo);font-weight:700;font-size:11px;
     vertical-align:middle;text-transform:uppercase;letter-spacing:.6px;border-radius:999px;padding:3px 9px;margin-left:8px}
@@ -235,7 +235,7 @@
 
   footer{text-align:center;color:var(--muted);font-weight:600;font-size:14px;
     padding:8px 16px calc(34px + env(safe-area-inset-bottom))}
-  footer .heart{color:var(--sun-deep)}
+  footer .heart{color:var(--indigo)}
 </style>
 </head>
 <body>
@@ -734,7 +734,7 @@ if ("serviceWorker" in navigator){
   if (!forcePreview && localStorage.getItem("ya-install-dismissed")) return; // don't nag
 
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const shareIcon = '<svg class="shareico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2C2A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M6 12H5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2h-1"/></svg>';
+  const shareIcon = '<svg class="shareico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4530E0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M6 12H5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2h-1"/></svg>';
   let deferred = null;   // Android beforeinstallprompt event
   let banner   = null;
 
