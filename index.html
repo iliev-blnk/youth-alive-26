@@ -16,29 +16,29 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-top:#FFD23F; --bg-bot:#F7941D;
-    --indigo:#2C2A8E; --purple:#4B3FA0; --cyan:#21C3E0;
-    --card:#FFFFFF; --ink:#20204A; --muted:#5b5b86;
-    --line:#e7e7f3; --soft:#f4f4fb;
-    --radius:22px; --shadow:0 18px 40px rgba(44,42,142,.18);
-    --maxw:820px;
+    --cream:#FBF6EC; --card:#FFFFFF;
+    --ink:#262437; --muted:#77748A;
+    --indigo:#2C2A8E; --tint:#ECEBF7;
+    --sun:#F7B733; --sun-deep:#F2951E;
+    --line:#EBE5D6; --soft:#F4EFE3;
+    --ok:#1E9E6A; --no:#CE5B4E;
+    --radius:20px;
+    --shadow:0 6px 22px rgba(38,36,80,.05), 0 1px 2px rgba(38,36,80,.04);
+    --maxw:760px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
     margin:0;
-    font-family:"Nunito",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    color:var(--ink);
-    background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bot) 60%,#e97e12 100%);
-    background-attachment:fixed;
-    min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-    line-height:1.55;
+    font-family:"Figtree",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink); background:var(--cream);
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+    line-height:1.6; font-size:16px;
   }
-  a{color:var(--indigo);font-weight:700}
+  a{color:var(--indigo);font-weight:600;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
 
   /* ---------- Mobile-first base ---------- */
@@ -46,198 +46,194 @@
   *{-webkit-tap-highlight-color:transparent}
   button,a,.chip,summary{touch-action:manipulation}
   img,svg{max-width:100%}
-  /* comfortable tap feedback */
-  .chip:active,.linkbtn:active,.lang button:active,.ib-install:active,.ib-x:active{transform:scale(.96)}
+  .ic{width:24px;height:24px;flex:0 0 auto;stroke:currentColor;fill:none;
+    stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .chip:active,.linkbtn:active,.lang button:active,.ib-install:active,.ib-x:active{transform:scale(.97)}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *{animation-duration:.001ms!important;transition-duration:.001ms!important}
   }
 
-  /* ---------- Decorative silhouettes ---------- */
-  .silhouette{position:fixed;left:0;right:0;bottom:0;width:100%;z-index:0;pointer-events:none;opacity:.9;line-height:0}
-  .silhouette svg{width:100%;height:auto;display:block}
-  .content{position:relative;z-index:1}
-
   /* ---------- Hero ---------- */
-  header.hero{position:relative;text-align:center;overflow:hidden;
-    padding:calc(30px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 20px calc(16px + env(safe-area-inset-left))}
-  .flame{font-size:0;line-height:0}
-  .flame svg{width:52px;height:52px;filter:drop-shadow(0 4px 0 rgba(44,42,142,.25))}
-  .brand{
-    font-family:"Anton",sans-serif;letter-spacing:2px;line-height:.92;
-    color:var(--indigo);text-transform:uppercase;
-    font-size:clamp(38px,10vw,72px);margin:6px 0 0;
-    text-shadow:3px 3px 0 rgba(255,255,255,.7);
-  }
-  .brand .yr{color:var(--cyan);-webkit-text-stroke:2px var(--indigo);paint-order:stroke fill}
-  .sub{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:2px}
-  .sub .summer{font-family:"Pacifico",cursive;font-size:clamp(26px,7vw,44px);color:#0f9fc4;
-    text-shadow:2px 2px 0 #fff;transform:rotate(-4deg)}
-  .sub .camp{font-family:"Anton",sans-serif;font-size:clamp(28px,7.5vw,48px);letter-spacing:2px;
-    color:var(--indigo);text-transform:uppercase}
-  .tagline{font-family:"Fredoka",sans-serif;font-weight:600;color:var(--indigo);
-    text-transform:uppercase;letter-spacing:3px;font-size:13px;margin-top:6px;opacity:.85}
-  .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-  .pill{background:var(--indigo);color:#fff;border-radius:999px;padding:7px 15px;
-    font-weight:800;font-size:14px;display:inline-flex;gap:7px;align-items:center;
-    box-shadow:0 6px 0 rgba(44,42,142,.25)}
-  .pill.alt{background:#fff;color:var(--indigo)}
+  header.hero{position:relative;text-align:center;
+    background:radial-gradient(135% 130% at 50% -25%, var(--sun) 0%, var(--sun-deep) 80%);
+    padding:calc(30px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left))}
+  .flame svg{width:42px;height:42px}
+  .eyebrow{font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    font-size:12px;color:var(--indigo);opacity:.85;margin:6px 0 0}
+  .brand{font-family:"Fraunces",Georgia,serif;font-weight:600;font-optical-sizing:auto;
+    color:var(--indigo);font-size:clamp(38px,10.5vw,62px);line-height:1.0;margin:4px 0 0;letter-spacing:-.5px}
+  .brand em{font-style:italic;font-weight:500}
+  .tagline{font-family:"Fraunces",serif;font-style:italic;font-weight:400;color:var(--indigo);
+    font-size:clamp(15px,4vw,18px);margin:8px 0 0;opacity:.9}
+  .meta{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .pill{background:rgba(255,255,255,.92);color:var(--indigo);border-radius:999px;padding:8px 14px;
+    font-weight:600;font-size:13.5px;display:inline-flex;gap:6px;align-items:center}
+  .pill .ic{width:16px;height:16px;stroke-width:2}
 
   /* ---------- Language toggle ---------- */
-  .lang{margin:18px auto 0;display:inline-flex;background:rgba(255,255,255,.55);
-    border:2px solid var(--indigo);border-radius:999px;padding:4px}
-  .lang button{font-family:"Fredoka",sans-serif;font-weight:700;font-size:15px;
-    border:0;background:transparent;color:var(--indigo);padding:7px 20px;border-radius:999px;
+  .lang{margin:16px auto 0;display:inline-flex;background:rgba(255,255,255,.5);
+    border-radius:999px;padding:4px;gap:2px}
+  .lang button{font-family:"Figtree",sans-serif;font-weight:700;font-size:14px;
+    border:0;background:transparent;color:var(--indigo);padding:7px 18px;border-radius:999px;
     cursor:pointer;transition:.15s}
   .lang button[aria-pressed="true"]{background:var(--indigo);color:#fff}
 
+  /* ---------- Mountains dividing hero into the body ---------- */
+  .hero-range{display:block;width:100%;height:clamp(38px,9vw,58px);margin-top:22px}
+  .hero-range .back{fill:var(--indigo);opacity:.12}
+  .hero-range .front{fill:var(--cream)}
+
   /* ---------- Sticky nav ---------- */
-  nav.chips{position:sticky;top:0;z-index:20;background:rgba(255,210,63,.92);
-    backdrop-filter:blur(8px);border-bottom:2px solid rgba(44,42,142,.15);
-    margin-top:16px}
-  .chips-inner{display:flex;gap:8px;overflow-x:auto;
-    padding:10px calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left));
+  nav.chips{position:sticky;top:0;z-index:20;background:rgba(251,246,236,.85);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .chips-inner{display:flex;gap:6px;overflow-x:auto;
+    padding:9px calc(14px + env(safe-area-inset-right)) 9px calc(14px + env(safe-area-inset-left));
     max-width:var(--maxw);margin:0 auto;scrollbar-width:none;
     -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
   .chips-inner::-webkit-scrollbar{display:none}
-  .chip{white-space:nowrap;flex:0 0 auto;font-family:"Fredoka",sans-serif;font-weight:600;
-    font-size:14.5px;background:#fff;color:var(--indigo);border:2px solid var(--indigo);
-    border-radius:999px;padding:9px 15px;min-height:40px;display:inline-flex;align-items:center;
+  .chip{white-space:nowrap;flex:0 0 auto;font-family:"Figtree",sans-serif;font-weight:600;
+    font-size:14px;background:transparent;color:var(--muted);border-radius:10px;
+    padding:8px 12px;min-height:38px;display:inline-flex;align-items:center;gap:6px;
     scroll-snap-align:start;cursor:pointer;text-decoration:none;transition:.15s}
-  .chip:hover{background:var(--indigo);color:#fff}
-  .chip.active{background:var(--indigo);color:#fff}
+  .chip .ic{width:16px;height:16px;stroke-width:2}
+  .chip:hover{background:var(--soft);color:var(--indigo)}
+  .chip.active{background:var(--tint);color:var(--indigo);font-weight:700}
 
   /* ---------- Cards / sections ---------- */
-  main{padding:22px 0 60px}
-  section.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    padding:22px;margin:0 0 20px;scroll-margin-top:70px}
-  .sec-head{display:flex;align-items:center;gap:12px;margin:0 0 6px}
-  .sec-ico{width:42px;height:42px;flex:0 0 auto;border-radius:12px;background:var(--soft);
-    display:grid;place-items:center;font-size:22px}
-  .sec-title{font-family:"Fredoka",sans-serif;font-weight:700;color:var(--indigo);
-    font-size:clamp(21px,5vw,26px);margin:0;line-height:1.1}
-  .sec-note{color:var(--muted);font-size:14px;margin:0}
-  .intro{color:var(--muted);margin:4px 0 14px;font-size:15px}
+  main{padding:24px 0 40px}
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:24px;margin:0 0 16px;scroll-margin-top:62px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+  .sec-ico{width:40px;height:40px;flex:0 0 auto;border-radius:12px;background:var(--tint);
+    color:var(--indigo);display:grid;place-items:center}
+  .sec-ico .ic{width:22px;height:22px}
+  .sec-title{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);
+    font-size:clamp(20px,4.5vw,24px);margin:0;line-height:1.15;letter-spacing:-.2px}
+  .intro{color:var(--muted);margin:-4px 0 16px;font-size:15px}
 
   /* quick facts */
-  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .fact{background:var(--soft);border-radius:14px;padding:12px 14px}
-  .fact .k{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--purple);font-weight:800}
-  .fact .v{font-weight:800;color:var(--ink);font-size:15px;margin-top:2px}
-  @media(max-width:480px){.facts{grid-template-columns:1fr}}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+  .fact{padding:12px 0;border-bottom:1px solid var(--line)}
+  .fact .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700}
+  .fact .v{font-weight:600;color:var(--ink);font-size:15.5px;margin-top:3px}
+  @media(max-width:520px){.facts{grid-template-columns:1fr}}
 
   /* rules */
   ol.rules{list-style:none;margin:0;padding:0;counter-reset:r}
-  ol.rules li{counter-increment:r;display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
-  ol.rules li:last-child{border-bottom:0}
-  ol.rules li::before{content:counter(r);flex:0 0 auto;width:28px;height:28px;border-radius:50%;
-    background:var(--indigo);color:#fff;font-family:"Fredoka",sans-serif;font-weight:700;
-    display:grid;place-items:center;font-size:14px;margin-top:1px}
-  .rule-t{font-weight:800;color:var(--indigo)}
-  .rule-d{color:var(--ink)}
+  ol.rules li{counter-increment:r;display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+  ol.rules li:first-child{padding-top:0}
+  ol.rules li:last-child{border-bottom:0;padding-bottom:0}
+  ol.rules li::before{content:counter(r);flex:0 0 auto;width:27px;height:27px;border-radius:9px;
+    background:var(--tint);color:var(--indigo);font-family:"Figtree",sans-serif;font-weight:700;
+    display:grid;place-items:center;font-size:13px;margin-top:1px}
+  .rule-t{font-weight:700;color:var(--ink)}
+  .rule-d{color:var(--muted)}
 
   /* accordion */
-  details.acc{border:2px solid var(--line);border-radius:14px;margin:0 0 10px;overflow:hidden;background:#fff}
-  details.acc[open]{border-color:var(--indigo)}
-  details.acc>summary{list-style:none;cursor:pointer;padding:13px 15px;font-family:"Fredoka",sans-serif;
-    font-weight:600;color:var(--indigo);display:flex;justify-content:space-between;align-items:center;gap:10px}
+  details.acc{border:1px solid var(--line);border-radius:14px;margin:0 0 8px;overflow:hidden;background:#fff}
+  details.acc[open]{background:#fffdf8}
+  details.acc>summary{list-style:none;cursor:pointer;padding:14px 16px;font-family:"Figtree",sans-serif;
+    font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px}
   details.acc>summary::-webkit-details-marker{display:none}
-  details.acc>summary .caret{transition:.2s;font-size:13px;color:var(--purple)}
-  details.acc[open]>summary .caret{transform:rotate(180deg)}
-  details.acc .body{padding:0 15px 14px}
-  ul.list{margin:6px 0 0;padding-left:20px}
-  ul.list li{margin:5px 0}
-  ul.check{list-style:none;padding:0;margin:6px 0 0}
-  ul.check li{position:relative;padding-left:26px;margin:7px 0}
-  ul.check li::before{content:"✓";position:absolute;left:0;top:0;color:#149a6b;font-weight:900}
-  ul.no{list-style:none;padding:0;margin:6px 0 0}
-  ul.no li{position:relative;padding-left:26px;margin:7px 0}
-  ul.no li::before{content:"✕";position:absolute;left:0;top:0;color:#d23b3b;font-weight:900}
+  details.acc>summary .caret{transition:.2s;font-size:12px;color:var(--muted)}
+  details.acc[open]>summary{color:var(--indigo)}
+  details.acc[open]>summary .caret{transform:rotate(180deg);color:var(--indigo)}
+  details.acc .body{padding:2px 16px 16px}
+  ul.check{list-style:none;padding:0;margin:0}
+  ul.check li{position:relative;padding-left:26px;margin:9px 0;color:var(--ink)}
+  ul.check li::before{content:"";position:absolute;left:3px;top:6px;width:6px;height:10px;
+    border:solid var(--ok);border-width:0 2px 2px 0;transform:rotate(45deg)}
+  ul.no{list-style:none;padding:0;margin:0}
+  ul.no li{position:relative;padding-left:26px;margin:10px 0;color:var(--ink)}
+  ul.no li::before{content:"";position:absolute;left:4px;top:11px;width:11px;height:2px;
+    background:var(--no);border-radius:2px}
 
   /* callout / placeholder */
-  .callout{background:linear-gradient(180deg,#fff9e8,#fff2cf);border:2px dashed var(--bg-bot);
-    border-radius:14px;padding:14px 16px;color:#8a5a00;font-weight:600}
-  .soon{display:inline-block;background:var(--cyan);color:#083b47;font-weight:800;font-size:12px;
-    text-transform:uppercase;letter-spacing:.5px;border-radius:999px;padding:3px 10px;margin-left:8px}
-  .tip{background:var(--soft);border-left:4px solid var(--cyan);border-radius:0 12px 12px 0;
-    padding:11px 14px;margin:10px 0 0;font-size:14px}
-  .tip b{color:var(--indigo)}
+  .callout{background:var(--soft);border:1px dashed rgba(242,149,30,.5);
+    border-radius:14px;padding:16px;color:var(--muted);font-size:15px}
+  .soon{display:inline-block;background:var(--tint);color:var(--indigo);font-weight:700;font-size:11px;
+    vertical-align:middle;text-transform:uppercase;letter-spacing:.6px;border-radius:999px;padding:3px 9px;margin-left:8px}
+  .tip{background:var(--soft);border-radius:12px;padding:12px 14px;margin:16px 0 0;font-size:14.5px;color:var(--muted)}
+  .tip b{color:var(--ink);font-weight:700}
+  .tip+.tip{margin-top:8px}
 
   /* transport steps */
-  .tline{display:grid;gap:10px;margin-top:6px}
-  .tstep{display:flex;gap:12px;background:var(--soft);border-radius:14px;padding:12px 14px}
-  .tstep .badge{flex:0 0 auto;background:var(--cyan);color:#083b47;font-weight:800;border-radius:10px;
-    padding:6px 10px;font-size:13px;height:fit-content;text-transform:uppercase;letter-spacing:.5px}
+  .tline{display:grid;gap:0}
+  .tstep{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+  .tstep:first-child{padding-top:0}
+  .tstep:last-child{border-bottom:0;padding-bottom:0}
+  .tstep .badge{flex:0 0 72px;color:var(--indigo);font-weight:700;font-size:12px;
+    text-transform:uppercase;letter-spacing:.5px}
+  .tstep .ttext{color:var(--ink)}
 
   /* contact */
-  .links{display:grid;gap:10px;margin-top:6px}
-  .linkbtn{display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--soft);
-    border-radius:14px;padding:13px 15px;color:var(--ink);font-weight:700;transition:.15s}
-  .linkbtn:hover{background:var(--indigo);color:#fff}
-  .linkbtn:hover .lsub{color:#dcdcff}
-  .linkbtn .lico{font-size:22px}
-  .lsub{display:block;font-weight:600;color:var(--muted);font-size:13px}
+  .links{display:grid;gap:8px}
+  .linkbtn{display:flex;align-items:center;gap:12px;text-decoration:none;
+    border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--ink);
+    font-weight:600;transition:.15s}
+  .linkbtn:hover{background:var(--soft)}
+  .linkbtn .lico{width:38px;height:38px;flex:0 0 auto;border-radius:11px;background:var(--tint);
+    color:var(--indigo);display:grid;place-items:center}
+  .linkbtn .lico .ic{width:20px;height:20px}
+  .lmain{min-width:0}
+  .lsub{display:block;font-weight:500;color:var(--muted);font-size:13px;margin-top:1px}
 
   /* ---------- Install (Add to Home Screen) banner ---------- */
-  .install-banner{position:fixed;left:8px;right:8px;bottom:8px;z-index:60;max-width:500px;margin:0 auto;
-    background:#fff;border:2px solid var(--indigo);border-radius:20px;
-    box-shadow:0 16px 40px rgba(44,42,142,.35);
+  .install-banner{position:fixed;left:8px;right:8px;bottom:8px;z-index:60;max-width:460px;margin:0 auto;
+    background:#fff;border:1px solid var(--line);border-radius:18px;
+    box-shadow:0 18px 44px rgba(38,36,80,.22);
     padding:14px 14px calc(14px + env(safe-area-inset-bottom));
-    transform:translateY(140%);opacity:0;transition:transform .34s cubic-bezier(.2,.75,.2,1),opacity .3s}
+    transform:translateY(160%);opacity:0;transition:transform .34s cubic-bezier(.2,.75,.2,1),opacity .3s}
   .install-banner.visible{transform:translateY(0);opacity:1}
   .ib-row{display:flex;align-items:center;gap:12px}
-  .ib-ico{width:48px;height:48px;flex:0 0 auto;border-radius:13px}
+  .ib-ico{width:46px;height:46px;flex:0 0 auto;border-radius:12px}
   .ib-txt{flex:1;min-width:0}
-  .ib-txt strong{display:block;color:var(--indigo);font-family:"Fredoka",sans-serif;font-weight:700;font-size:16px;line-height:1.2}
+  .ib-txt strong{display:block;color:var(--ink);font-family:"Fraunces",serif;font-weight:600;font-size:16px;line-height:1.2}
   .ib-txt span{display:block;color:var(--muted);font-size:13px;line-height:1.35;margin-top:2px}
-  .ib-x{flex:0 0 auto;width:36px;height:36px;border:0;background:var(--soft);border-radius:50%;
-    font-size:22px;color:var(--muted);cursor:pointer;line-height:1;display:grid;place-items:center}
-  .ib-install{width:100%;min-height:50px;margin-top:12px;border:0;border-radius:14px;
-    background:var(--indigo);color:#fff;font-family:"Fredoka",sans-serif;font-weight:600;font-size:16px;
+  .ib-x{flex:0 0 auto;width:34px;height:34px;border:0;background:var(--soft);border-radius:50%;
+    font-size:20px;color:var(--muted);cursor:pointer;line-height:1;display:grid;place-items:center}
+  .ib-install{width:100%;min-height:48px;margin-top:12px;border:0;border-radius:13px;
+    background:var(--indigo);color:#fff;font-family:"Figtree",sans-serif;font-weight:700;font-size:15.5px;
     cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
-  .ib-ios{margin-top:12px;background:var(--soft);border-radius:14px;padding:12px 14px;
+  .ib-ios{margin-top:12px;background:var(--soft);border-radius:12px;padding:12px 14px;
     color:var(--ink);font-size:14px;line-height:1.45;display:flex;gap:10px;align-items:flex-start}
   .ib-ios[hidden]{display:none}
   .ib-ios .shareico{flex:0 0 auto;margin-top:1px}
   .ib-ios b{color:var(--indigo)}
 
-  footer{text-align:center;color:var(--indigo);font-weight:700;position:relative;z-index:1;
-    padding:6px 16px calc(30px + env(safe-area-inset-bottom))}
-  footer .heart{color:#d23b3b}
+  footer{text-align:center;color:var(--muted);font-weight:600;font-size:14px;
+    padding:8px 16px calc(34px + env(safe-area-inset-bottom))}
+  footer .heart{color:var(--sun-deep)}
 </style>
 </head>
 <body>
 
-<!-- background mountains + forest -->
-<div class="silhouette" aria-hidden="true">
-  <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#2C2A8E" opacity="0.16" d="M0,160 L120,90 L220,150 L340,60 L460,150 L560,110 L700,170 L860,80 L1000,160 L1140,100 L1280,160 L1440,110 L1440,220 L0,220 Z"/>
-    <path fill="#2C2A8E" opacity="0.28" d="M0,190 L90,140 L180,185 L300,120 L420,185 L540,150 L660,195 L800,130 L940,190 L1080,150 L1220,195 L1360,150 L1440,180 L1440,220 L0,220 Z"/>
-    <g fill="#2C2A8E" opacity="0.9">
-      <path d="M60,220 L60,175 L45,175 L60,158 L50,158 L68,140 L86,158 L76,158 L91,175 L76,175 L76,220 Z"/>
-      <path d="M1330,220 L1330,180 L1318,180 L1332,164 L1323,164 L1340,146 L1357,164 L1348,164 L1362,180 L1350,180 L1350,220 Z"/>
-      <path d="M1180,220 L1180,185 L1170,185 L1182,171 L1174,171 L1189,155 L1204,171 L1196,171 L1208,185 L1198,185 L1198,220 Z"/>
-      <path d="M250,220 L250,188 L241,188 L252,175 L245,175 L258,160 L271,175 L264,175 L275,188 L266,188 L266,220 Z"/>
-    </g>
-  </svg>
-</div>
-
-<div class="content">
 <header class="hero">
   <div class="flame" aria-hidden="true">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#F7941D" stroke="#2C2A8E" stroke-width="1.3" d="M12 2c2.5 3 3 5 1.5 6.5C12.8 9.2 12 8.5 12 7c-1.5 1.5-4 4-4 7.5A4 4 0 0 0 12 22a4.2 4.2 0 0 0 4.4-4.2c0-1.2-.4-2-1-2.8.2 1-.4 1.8-1.2 2 .6-1.6.2-3.5-1-5 .2 2-.8 3-1.7 3.2C10 14.5 10 12 12 9.5 14.5 6.7 15 4.5 12 2Z"/></svg>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#2C2A8E" stroke="#2C2A8E" stroke-width="1.1" stroke-linejoin="round" d="M12 2c2.5 3 3 5 1.5 6.5C12.8 9.2 12 8.5 12 7c-1.5 1.5-4 4-4 7.5A4 4 0 0 0 12 22a4.2 4.2 0 0 0 4.4-4.2c0-1.2-.4-2-1-2.8.2 1-.4 1.8-1.2 2 .6-1.6.2-3.5-1-5 .2 2-.8 3-1.7 3.2C10 14.5 10 12 12 9.5 14.5 6.7 15 4.5 12 2Z"/></svg>
   </div>
-  <h1 class="brand">Youth Alive <span class="yr">26</span></h1>
-  <div class="sub"><span class="summer">summer</span><span class="camp">Camp</span></div>
+  <div class="eyebrow" data-i18n="eyebrow">Summer Camp</div>
+  <h1 class="brand">Youth Alive <em>&rsquo;26</em></h1>
   <div class="tagline" data-i18n="tagline">Bound by Love</div>
   <div class="meta">
-    <span class="pill">📅 <span data-i18n="heroDates">18–20 September 2026</span></span>
-    <span class="pill alt">📍 <span data-i18n="heroLoc">Sapanca, Sakarya</span></span>
+    <span class="pill">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+      <span data-i18n="heroDates">18–20 September 2026</span>
+    </span>
+    <span class="pill">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M12 21s6-5.3 6-10a6 6 0 0 0-12 0c0 4.7 6 10 6 10Z"/><circle cx="12" cy="11" r="2.3"/></svg>
+      <span data-i18n="heroLoc">Sapanca, Sakarya</span>
+    </span>
   </div>
   <div class="lang" role="group" aria-label="Language">
     <button id="btn-en" onclick="setLang('en')" aria-pressed="true">EN</button>
     <button id="btn-tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
   </div>
+  <svg class="hero-range" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+    <path class="back" d="M0,80 L0,44 L200,58 L420,26 L640,54 L860,22 L1080,54 L1300,30 L1440,50 L1440,80 Z"/>
+    <path class="front" d="M0,80 L0,58 L180,64 L360,38 L520,62 L700,34 L900,64 L1080,42 L1280,66 L1440,46 L1440,80 Z"/>
+  </svg>
 </header>
 
 <nav class="chips" aria-label="Sections">
@@ -249,7 +245,6 @@
 <footer>
   <span data-i18n="footer">Youth Alive 26 · See you at camp</span> <span class="heart">♥</span>
 </footer>
-</div>
 
 <script>
 /* ============================================================
@@ -273,6 +268,22 @@ const UI = {
                tr:'Aşağıdaki <b>Paylaş</b> düğmesine dokunun, ardından <b>"Ana Ekrana Ekle"</b>yi seçin.' },
     dismiss: { en:"Dismiss", tr:"Kapat" },
   },
+};
+
+/* Consistent line icons (stroke = currentColor). Keyed by section id + a few extras. */
+const ICONS = {
+  facts:    '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.2"/><circle cx="12" cy="7.7" r=".7" fill="currentColor" stroke="none"/></svg>',
+  tent:     '<svg class="ic" viewBox="0 0 24 24"><path d="M12 4 4 19h16L12 4Z"/><path d="M12 4v15"/><path d="m9.5 19 2.5-4 2.5 4"/></svg>',
+  schedule: '<svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>',
+  rules:    '<svg class="ic" viewBox="0 0 24 24"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="3.4" rx="1"/><path d="m8.5 13 2.2 2.2 4.3-4.3"/></svg>',
+  packing:  '<svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9Z"/><path d="M9.5 8.5a2.5 2.5 0 0 1 5 0"/><path d="M8 14h8"/><path d="M10.5 4.6a1.5 1.5 0 0 1 3 0"/></svg>',
+  dont:     '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m6.2 6.2 11.6 11.6"/></svg>',
+  transport:'<svg class="ic" viewBox="0 0 24 24"><rect x="6" y="3.5" width="12" height="13" rx="3.5"/><path d="M6 10.5h12"/><circle cx="9.5" cy="13.3" r=".9"/><circle cx="14.5" cy="13.3" r=".9"/><path d="M8.5 16.5 7 20M15.5 16.5 17 20"/></svg>',
+  music:    '<svg class="ic" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/></svg>',
+  notes:    '<svg class="ic" viewBox="0 0 24 24"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.5.4.8 1 .8 1.6v.3h6v-.3c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/></svg>',
+  contact:  '<svg class="ic" viewBox="0 0 24 24"><path d="M6.8 3.5H10l1.4 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.4v3.2a1.8 1.8 0 0 1-2 1.8A15.5 15.5 0 0 1 4 5.5a1.8 1.8 0 0 1 1.8-2Z"/></svg>',
+  form:     '<svg class="ic" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>',
+  instagram:'<svg class="ic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.5"/><circle cx="16.4" cy="7.6" r="1"/></svg>',
 };
 
 const DATA = {
@@ -444,12 +455,12 @@ const DATA = {
     title:{ en:"Good to know", tr:"Bilinmesi gereken" },
     ico:"💡",
     items:[
-      { t:{en:"💧 Water bottle",tr:"💧 Su şişesi"}, d:{en:"Bring your own reusable bottle — bottled water is NOT provided at the campground. Metal is best for nature.",tr:"Kendi tekrar kullanılabilir şişenizi getirin — kampta pet su verilmeyecek. Doğa için metal en iyisi."} },
-      { t:{en:"🍪 Snacks",tr:"🍪 Atıştırmalık"}, d:{en:"There's no supermarket at the campground. If you're picky, bring snacks for the two days.",tr:"Kampta market yok. Seçiciyseniz iki gün için atıştırmalık getirin."} },
-      { t:{en:"🦟 Bug spray",tr:"🦟 Böcek spreyi"}, d:{en:"No need for one each — one bottle can be shared between several friends.",tr:"Herkese bir tane gerekmez — bir şişe birkaç arkadaş arasında paylaşılabilir."} },
-      { t:{en:"🍴 Cups & cutlery",tr:"🍴 Bardak & çatal"}, d:{en:"Optional. Metal preferred, plastic is fine — reusable makes the camp experience fuller.",tr:"Opsiyonel. Metal tercih edilir, plastik de olur — tekrar kullanılabilir olan daha iyi."} },
-      { t:{en:"🍽️ Meals & diet",tr:"🍽️ Yemek & diyet"}, d:{en:"7 meals included. Vegetarian, vegan and allergen-free options on request — note it on the registration form.",tr:"7 öğün dahil. Talebe göre vejetaryen, vegan ve alerjensiz seçenekler — kayıt formunda belirtin."} },
-      { t:{en:"⛑️ Health",tr:"⛑️ Sağlık"}, d:{en:"The team is ready for emergencies; serious cases get transport to the nearest hospital. Insurance covers the event period.",tr:"Ekip acil durumlara hazır; ciddi durumlarda en yakın hastaneye ulaşım sağlanır. Sigorta etkinlik süresini kapsar."} },
+      { t:{en:"Water bottle",tr:"Su şişesi"}, d:{en:"Bring your own reusable bottle — bottled water is NOT provided at the campground. Metal is best for nature.",tr:"Kendi tekrar kullanılabilir şişenizi getirin — kampta pet su verilmeyecek. Doğa için metal en iyisi."} },
+      { t:{en:"Snacks",tr:"Atıştırmalık"}, d:{en:"There's no supermarket at the campground. If you're picky, bring snacks for the two days.",tr:"Kampta market yok. Seçiciyseniz iki gün için atıştırmalık getirin."} },
+      { t:{en:"Bug spray",tr:"Böcek spreyi"}, d:{en:"No need for one each — one bottle can be shared between several friends.",tr:"Herkese bir tane gerekmez — bir şişe birkaç arkadaş arasında paylaşılabilir."} },
+      { t:{en:"Cups & cutlery",tr:"Bardak & çatal"}, d:{en:"Optional. Metal preferred, plastic is fine — reusable makes the camp experience fuller.",tr:"Opsiyonel. Metal tercih edilir, plastik de olur — tekrar kullanılabilir olan daha iyi."} },
+      { t:{en:"Meals & diet",tr:"Yemek & diyet"}, d:{en:"7 meals included. Vegetarian, vegan and allergen-free options on request — note it on the registration form.",tr:"7 öğün dahil. Talebe göre vejetaryen, vegan ve alerjensiz seçenekler — kayıt formunda belirtin."} },
+      { t:{en:"Health",tr:"Sağlık"}, d:{en:"The team is ready for emergencies; serious cases get transport to the nearest hospital. Insurance covers the event period.",tr:"Ekip acil durumlara hazır; ciddi durumlarda en yakın hastaneye ulaşım sağlanır. Sigorta etkinlik süresini kapsar."} },
     ],
   },
 
@@ -457,9 +468,9 @@ const DATA = {
     title:{ en:"Contact & registration", tr:"İletişim & kayıt" },
     ico:"📞",
     links:[
-      { ico:"📝", href:"https://forms.gle/eztjisRnFT7jb3Uh7", t:{en:"Pre-registration form",tr:"Ön kayıt formu"}, s:{en:"forms.gle · register early, spots are limited",tr:"forms.gle · erken kaydolun, yer sınırlı"} },
-      { ico:"📸", href:"https://www.instagram.com/youth.alivetr/", t:{en:"@youth.alivetr",tr:"@youth.alivetr"}, s:{en:"Youth Alive on Instagram",tr:"Instagram'da Youth Alive"} },
-      { ico:"⛺", href:"https://www.instagram.com/vadicamping/", t:{en:"@vadicamping",tr:"@vadicamping"}, s:{en:"The campground",tr:"Kamp alanı"} },
+      { ico:"form", href:"https://forms.gle/eztjisRnFT7jb3Uh7", t:{en:"Pre-registration form",tr:"Ön kayıt formu"}, s:{en:"forms.gle · register early, spots are limited",tr:"forms.gle · erken kaydolun, yer sınırlı"} },
+      { ico:"instagram", href:"https://www.instagram.com/youth.alivetr/", t:{en:"@youth.alivetr",tr:"@youth.alivetr"}, s:{en:"Youth Alive on Instagram",tr:"Instagram'da Youth Alive"} },
+      { ico:"tent", href:"https://www.instagram.com/vadicamping/", t:{en:"@vadicamping",tr:"@vadicamping"}, s:{en:"The campground",tr:"Kamp alanı"} },
     ],
     note:{ en:"Questions? Ask in the WhatsApp participant group — Esau and the team are there to help.",
            tr:"Sorularınız mı var? WhatsApp katılımcı grubunda sorun — Esau ve ekip yardıma hazır." },
@@ -478,9 +489,9 @@ if (urlLang) localStorage.setItem("ya-lang", lang);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const L = o => esc(o[lang]);
 
-function sectionShell(id, ico, title, inner, noteHtml){
+function sectionShell(id, title, inner, noteHtml){
   return `<section class="card" id="${id}">
-    <div class="sec-head"><div class="sec-ico">${ico}</div><h2 class="sec-title">${title}</h2></div>
+    <div class="sec-head"><div class="sec-ico">${ICONS[id]||""}</div><h2 class="sec-title">${title}</h2></div>
     ${inner}
     ${noteHtml||""}
   </section>`;
@@ -488,19 +499,19 @@ function sectionShell(id, ico, title, inner, noteHtml){
 
 function renderFacts(d){
   const facts = d.items.map(i=>`<div class="fact"><div class="k">${L(i.k)}</div><div class="v">${L(i.v)}</div></div>`).join("");
-  return sectionShell("facts", d.ico, L(d.title),
+  return sectionShell("facts", L(d.title),
     `<div class="facts">${facts}</div>`,
     `<div class="tip">${L(d.note)}</div>`);
 }
 
 function renderPlaceholder(id, d){
-  return sectionShell(id, d.ico, `${L(d.title)}<span class="soon">${L(UI.soon)}</span>`,
+  return sectionShell(id, `${L(d.title)}<span class="soon">${L(UI.soon)}</span>`,
     `<div class="callout">${L(d.text)}</div>`);
 }
 
 function renderRules(d){
   const lis = d.list.map(r=>`<li><div><span class="rule-t">${L(r.t)}.</span> <span class="rule-d">${L(r.d)}</span></div></li>`).join("");
-  return sectionShell("rules", d.ico, L(d.title),
+  return sectionShell("rules", L(d.title),
     `<p class="intro">${L(d.intro)}</p><ol class="rules">${lis}</ol>`);
 }
 
@@ -512,31 +523,31 @@ function renderPacking(d){
       <div class="body"><ul class="check">${items}</ul></div>
     </details>`;
   }).join("");
-  return sectionShell("packing", d.ico, L(d.title),
+  return sectionShell("packing", L(d.title),
     `<p class="intro">${L(d.intro)}</p>${groups}<div class="tip">${L(d.tip)}</div>`);
 }
 
 function renderDont(d){
   const items = d.items.map(i=>`<li>${L(i)}</li>`).join("");
-  return sectionShell("dont", d.ico, L(d.title), `<ul class="no">${items}</ul>`);
+  return sectionShell("dont", L(d.title), `<ul class="no">${items}</ul>`);
 }
 
 function renderTransport(d){
-  const steps = d.steps.map(s=>`<div class="tstep"><span class="badge">${L(s.b)}</span><div>${L(s.t)}</div></div>`).join("");
-  return sectionShell("transport", d.ico, L(d.title),
+  const steps = d.steps.map(s=>`<div class="tstep"><span class="badge">${L(s.b)}</span><div class="ttext">${L(s.t)}</div></div>`).join("");
+  return sectionShell("transport", L(d.title),
     `<p class="intro">${L(d.intro)}</p><div class="tline">${steps}</div>`,
     `<div class="callout">${L(d.note)}</div>`);
 }
 
 function renderNotes(d){
   const items = d.items.map(i=>`<div class="tip"><b>${L(i.t)}</b><br>${L(i.d)}</div>`).join("");
-  return sectionShell("notes", d.ico, L(d.title), items);
+  return sectionShell("notes", L(d.title), items);
 }
 
 function renderContact(d){
   const links = d.links.map(l=>`<a class="linkbtn" href="${esc(l.href)}" target="_blank" rel="noopener">
-      <span class="lico">${l.ico}</span><span>${L(l.t)}<span class="lsub">${L(l.s)}</span></span></a>`).join("");
-  return sectionShell("contact", d.ico, L(d.title),
+      <span class="lico">${ICONS[l.ico]||""}</span><span class="lmain">${L(l.t)}<span class="lsub">${L(l.s)}</span></span></a>`).join("");
+  return sectionShell("contact", L(d.title),
     `<div class="links">${links}</div>`,
     `<div class="tip">${L(d.note)}</div>`);
 }
@@ -545,6 +556,7 @@ function render(){
   document.documentElement.lang = lang;
   // hero i18n bits
   const heroTxt = {
+    eyebrow:{en:"Summer Camp",tr:"Yaz Kampı"},
     tagline:{en:"Bound by Love",tr:"Sevgiyle Birleşen"},
     heroDates:{en:"18–20 September 2026",tr:"18–20 Eylül 2026"},
     heroLoc:{en:"Sapanca, Sakarya",tr:"Sapanca, Sakarya"},
@@ -560,7 +572,7 @@ function render(){
 
   // nav chips
   document.getElementById("chips").innerHTML = DATA.nav.map(n=>
-    `<a class="chip" href="#${n.id}" data-target="${n.id}">${n.ico} ${n[lang]}</a>`).join("");
+    `<a class="chip" href="#${n.id}" data-target="${n.id}">${ICONS[n.id]||""}<span>${n[lang]}</span></a>`).join("");
 
   // sections (order matches nav)
   document.getElementById("main").innerHTML =
