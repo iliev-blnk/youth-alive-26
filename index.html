@@ -42,7 +42,7 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
 
   /* ---------- Mobile-first base ---------- */
-  html,body{overflow-x:hidden;overscroll-behavior-y:none}
+  html,body{overflow-x:clip}
   *{-webkit-tap-highlight-color:transparent}
   button,a,.chip,summary{touch-action:manipulation}
   img,svg{max-width:100%}
@@ -84,24 +84,46 @@
   .hero-range .back{fill:var(--indigo);opacity:.12}
   .hero-range .front{fill:var(--cream)}
 
-  /* ---------- Sticky nav ---------- */
-  nav.chips{position:sticky;top:0;z-index:20;background:rgba(251,246,236,.85);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .chips-inner{display:flex;gap:6px;overflow-x:auto;
-    padding:9px calc(14px + env(safe-area-inset-right)) 9px calc(14px + env(safe-area-inset-left));
-    max-width:var(--maxw);margin:0 auto;scrollbar-width:none;
-    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
-  .chips-inner::-webkit-scrollbar{display:none}
-  .chip{white-space:nowrap;flex:0 0 auto;font-family:"Figtree",sans-serif;font-weight:600;
-    font-size:14px;background:transparent;color:var(--muted);border-radius:10px;
-    padding:8px 12px;min-height:38px;display:inline-flex;align-items:center;gap:6px;
-    scroll-snap-align:start;cursor:pointer;text-decoration:none;transition:.15s}
-  .chip .ic{width:16px;height:16px;stroke-width:2}
-  .chip:hover{background:var(--soft);color:var(--indigo)}
-  .chip.active{background:var(--tint);color:var(--indigo);font-weight:700}
+  /* ---------- Home tiles (the category menu) ---------- */
+  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 0 8px}
+  @media(min-width:600px){.tiles{grid-template-columns:repeat(3,1fr)}}
+  .tile{position:relative;display:flex;flex-direction:column;gap:12px;align-items:flex-start;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;
+    text-decoration:none;color:var(--ink);box-shadow:var(--shadow);
+    transition:transform .15s,box-shadow .15s,border-color .15s}
+  .tile:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(38,36,80,.10);border-color:var(--tint)}
+  .tile:active{transform:translateY(0)}
+  .tile .tico{width:46px;height:46px;flex:0 0 auto;border-radius:13px;background:var(--tint);
+    color:var(--indigo);display:grid;place-items:center}
+  .tile .tico .ic{width:26px;height:26px}
+  .tile .tlabel{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:17px;line-height:1.15}
+  .tile .thint{color:var(--muted);font-size:12.5px;margin-top:-7px}
+  .tile .tsoon{position:absolute;top:13px;right:13px;background:var(--tint);color:var(--indigo);
+    font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:999px;padding:2px 7px}
+
+  /* ---------- Detail header (shown when viewing one category) ---------- */
+  .dhead{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:8px calc(12px + env(safe-area-inset-right)) 8px calc(10px + env(safe-area-inset-left));
+    background:rgba(251,246,236,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);min-height:54px}
+  .dhead .lang{margin:0}
+  .backbtn{display:inline-flex;align-items:center;gap:4px;border:0;background:transparent;color:var(--indigo);
+    font-family:"Figtree",sans-serif;font-weight:700;font-size:15px;cursor:pointer;padding:8px 10px;border-radius:10px}
+  .backbtn:hover{background:var(--soft)}
+  .backbtn .ic{width:20px;height:20px;stroke-width:2.2}
+  .dwrap{padding:20px 16px 44px}
+  .tomenu{display:inline-flex;align-items:center;gap:6px;margin:0;border:1px solid var(--line);
+    background:var(--card);color:var(--indigo);font-family:"Figtree",sans-serif;font-weight:700;font-size:14px;
+    border-radius:12px;padding:12px 16px;cursor:pointer;text-decoration:none}
+  .tomenu:hover{background:var(--soft)}
+  .tomenu .ic{width:18px;height:18px;stroke-width:2.2}
+
+  /* view transition */
+  .fade{animation:fade .26s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   /* ---------- Cards / sections ---------- */
-  main{padding:24px 0 40px}
+  main{padding:22px 0 44px}
   section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     box-shadow:var(--shadow);padding:24px;margin:0 0 16px;scroll-margin-top:62px}
   .sec-head{display:flex;align-items:center;gap:12px;margin:0 0 14px}
@@ -209,6 +231,7 @@
 </head>
 <body>
 
+<div id="home">
 <header class="hero">
   <div class="flame" aria-hidden="true">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#2C2A8E" stroke="#2C2A8E" stroke-width="1.1" stroke-linejoin="round" d="M12 2c2.5 3 3 5 1.5 6.5C12.8 9.2 12 8.5 12 7c-1.5 1.5-4 4-4 7.5A4 4 0 0 0 12 22a4.2 4.2 0 0 0 4.4-4.2c0-1.2-.4-2-1-2.8.2 1-.4 1.8-1.2 2 .6-1.6.2-3.5-1-5 .2 2-.8 3-1.7 3.2C10 14.5 10 12 12 9.5 14.5 6.7 15 4.5 12 2Z"/></svg>
@@ -227,20 +250,30 @@
     </span>
   </div>
   <div class="lang" role="group" aria-label="Language">
-    <button id="btn-en" onclick="setLang('en')" aria-pressed="true">EN</button>
-    <button id="btn-tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
+    <button data-lang="en" onclick="setLang('en')" aria-pressed="true">EN</button>
+    <button data-lang="tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
   </div>
   <svg class="hero-range" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
     <path class="back" d="M0,80 L0,44 L200,58 L420,26 L640,54 L860,22 L1080,54 L1300,30 L1440,50 L1440,80 Z"/>
     <path class="front" d="M0,80 L0,58 L180,64 L360,38 L520,62 L700,34 L900,64 L1080,42 L1280,66 L1440,46 L1440,80 Z"/>
   </svg>
-</header>
+  </header>
+  <main class="wrap"><div class="tiles" id="tiles"></div></main>
+</div>
 
-<nav class="chips" aria-label="Sections">
-  <div class="chips-inner" id="chips"></div>
-</nav>
-
-<main class="wrap" id="main"></main>
+<div id="detail" hidden>
+  <div class="dhead">
+    <button class="backbtn" type="button" onclick="goHome()">
+      <svg class="ic" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg>
+      <span data-i18n="back">Menu</span>
+    </button>
+    <div class="lang" role="group" aria-label="Language">
+      <button data-lang="en" onclick="setLang('en')" aria-pressed="true">EN</button>
+      <button data-lang="tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
+    </div>
+  </div>
+  <div class="wrap dwrap"><div id="view"></div></div>
+</div>
 
 <footer>
   <span data-i18n="footer">Youth Alive 26 · See you at camp</span> <span class="heart">♥</span>
@@ -256,6 +289,7 @@
 
 const UI = {
   soon:      { en:"Coming soon", tr:"Yakında" },
+  toMenu:    { en:"Back to menu", tr:"Menüye dön" },
   seeGroup:  { en:"More details will be shared in the WhatsApp participant group.",
                tr:"Daha fazla ayrıntı WhatsApp katılımcı grubunda paylaşılacaktır." },
   install: {
@@ -288,15 +322,15 @@ const ICONS = {
 
 const DATA = {
   nav: [
-    { id:"facts",     ico:"⛺", en:"Quick facts",  tr:"Özet bilgi" },
-    { id:"schedule",  ico:"🗓️", en:"Schedule",     tr:"Program" },
-    { id:"rules",     ico:"📋", en:"Rules",        tr:"Kurallar" },
-    { id:"packing",   ico:"🎒", en:"Packing list", tr:"Eşya listesi" },
-    { id:"dont",      ico:"🚫", en:"Don't bring",  tr:"Getirilmez" },
-    { id:"transport", ico:"🚆", en:"Transport",    tr:"Ulaşım" },
-    { id:"music",     ico:"🎵", en:"Music",        tr:"Müzik" },
-    { id:"notes",     ico:"💡", en:"Notes",        tr:"Notlar" },
-    { id:"contact",   ico:"📞", en:"Contact",      tr:"İletişim" },
+    { id:"facts",     en:"Quick facts",  tr:"Özet bilgi",   he:"Dates, place, fee",   ht:"Tarih, yer, ücret" },
+    { id:"schedule",  en:"Schedule",     tr:"Program",      he:"Daily program",       ht:"Günlük program", soon:true },
+    { id:"rules",     en:"Rules",        tr:"Kurallar",     he:"Camp do's & don'ts",  ht:"Uyulması gerekenler" },
+    { id:"packing",   en:"Packing list", tr:"Eşya listesi", he:"What to bring",       ht:"Ne getirmeli" },
+    { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
+    { id:"transport", en:"Transport",    tr:"Ulaşım",       he:"Getting there",       ht:"Nasıl gidilir" },
+    { id:"music",     en:"Music",        tr:"Müzik",        he:"Songs & lyrics",      ht:"Şarkı & sözler", soon:true },
+    { id:"notes",     en:"Notes",        tr:"Notlar",       he:"Good to know",        ht:"Faydalı bilgiler" },
+    { id:"contact",   en:"Contact",      tr:"İletişim",     he:"Register & ask",      ht:"Kayıt & iletişim" },
   ],
 
   facts: {
@@ -552,41 +586,79 @@ function renderContact(d){
     `<div class="tip">${L(d.note)}</div>`);
 }
 
+/* one renderer per section, keyed by id (matches nav + hash) */
+const SECTION_RENDERERS = {
+  facts:     ()=>renderFacts(DATA.facts),
+  schedule:  ()=>renderPlaceholder("schedule", DATA.schedule),
+  rules:     ()=>renderRules(DATA.rules),
+  packing:   ()=>renderPacking(DATA.packing),
+  dont:      ()=>renderDont(DATA.dont),
+  transport: ()=>renderTransport(DATA.transport),
+  music:     ()=>renderPlaceholder("music", DATA.music),
+  notes:     ()=>renderNotes(DATA.notes),
+  contact:   ()=>renderContact(DATA.contact),
+};
+
+function renderTiles(){
+  document.getElementById("tiles").innerHTML = DATA.nav.map(n=>`
+    <a class="tile" href="#${n.id}">
+      ${n.soon ? `<span class="tsoon">${L(UI.soon)}</span>` : ""}
+      <span class="tico">${ICONS[n.id]||""}</span>
+      <span class="tlabel">${esc(n[lang])}</span>
+      <span class="thint">${esc(lang==="en" ? n.he : n.ht)}</span>
+    </a>`).join("");
+}
+
+/* static i18n bits + toggle state + tiles. Does not switch views. */
 function render(){
   document.documentElement.lang = lang;
-  // hero i18n bits
-  const heroTxt = {
+  const txt = {
     eyebrow:{en:"Summer Camp",tr:"Yaz Kampı"},
     tagline:{en:"Bound by Love",tr:"Sevgiyle Birleşen"},
     heroDates:{en:"18–20 September 2026",tr:"18–20 Eylül 2026"},
     heroLoc:{en:"Sapanca, Sakarya",tr:"Sapanca, Sakarya"},
     footer:{en:"Youth Alive 26 · See you at camp",tr:"Youth Alive 26 · Kampta görüşürüz"},
+    back:{en:"Menu",tr:"Menü"},
   };
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k = el.getAttribute("data-i18n");
-    if (heroTxt[k]) el.textContent = heroTxt[k][lang];
+    if (txt[k]) el.textContent = txt[k][lang];
   });
-  // toggle state
-  document.getElementById("btn-en").setAttribute("aria-pressed", lang==="en");
-  document.getElementById("btn-tr").setAttribute("aria-pressed", lang==="tr");
+  document.querySelectorAll("[data-lang]").forEach(b=>
+    b.setAttribute("aria-pressed", b.dataset.lang===lang));
+  renderTiles();
+}
 
-  // nav chips
-  document.getElementById("chips").innerHTML = DATA.nav.map(n=>
-    `<a class="chip" href="#${n.id}" data-target="${n.id}">${ICONS[n.id]||""}<span>${n[lang]}</span></a>`).join("");
+/* ---------- view routing: home (tiles) <-> one category ---------- */
+function showHome(){
+  document.getElementById("detail").hidden = true;
+  document.getElementById("home").hidden = false;
+  window.scrollTo(0,0);
+}
 
-  // sections (order matches nav)
-  document.getElementById("main").innerHTML =
-    renderFacts(DATA.facts) +
-    renderPlaceholder("schedule", DATA.schedule) +
-    renderRules(DATA.rules) +
-    renderPacking(DATA.packing) +
-    renderDont(DATA.dont) +
-    renderTransport(DATA.transport) +
-    renderPlaceholder("music", DATA.music) +
-    renderNotes(DATA.notes) +
-    renderContact(DATA.contact);
+function showSection(id){
+  const body = SECTION_RENDERERS[id] ? SECTION_RENDERERS[id]() : "";
+  document.getElementById("view").innerHTML =
+    `<div class="fade">${body}
+       <button class="tomenu" type="button" onclick="goHome()">
+         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m15 5-7 7 7 7"/></svg>
+         ${esc(UI.toMenu[lang])}
+       </button>
+     </div>`;
+  document.getElementById("home").hidden = true;
+  document.getElementById("detail").hidden = false;
+  window.scrollTo(0,0);
+}
 
-  setupScrollSpy();
+function route(){
+  const id = decodeURIComponent(location.hash.replace(/^#/,""));
+  if (SECTION_RENDERERS[id]) showSection(id);
+  else showHome();
+}
+
+function goHome(){
+  if (location.hash) location.hash = "";   // fires hashchange -> route()
+  else showHome();
 }
 
 let refreshInstall = ()=>{};   // reassigned by the install banner once it exists
@@ -595,25 +667,13 @@ function setLang(l){
   lang = l;
   localStorage.setItem("ya-lang", l);
   render();
+  route();          // re-render the current view in the new language
   refreshInstall();
 }
 
-/* highlight active nav chip while scrolling */
-let spyObserver;
-function setupScrollSpy(){
-  if (spyObserver) spyObserver.disconnect();
-  const chips = [...document.querySelectorAll(".chip")];
-  spyObserver = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if (e.isIntersecting){
-        chips.forEach(c=>c.classList.toggle("active", c.dataset.target===e.target.id));
-      }
-    });
-  }, { rootMargin:"-45% 0px -50% 0px", threshold:0 });
-  document.querySelectorAll("section.card").forEach(s=>spyObserver.observe(s));
-}
-
+window.addEventListener("hashchange", route);
 render();
+route();
 
 /* service worker for offline use */
 if ("serviceWorker" in navigator){
