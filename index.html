@@ -115,9 +115,14 @@
   .tomenu:hover{background:var(--soft)}
   .tomenu .ic{width:18px;height:18px;stroke-width:2.2}
 
-  /* view transition */
-  .fade{animation:fade .26s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  /* view transitions (forward = open category, back = to menu) */
+  .anim-fwd{animation:enterFwd .3s cubic-bezier(.22,.61,.36,1) both}
+  .anim-back{animation:enterBack .3s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes enterFwd{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+  @keyframes enterBack{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+  /* soft fade when swapping language in place */
+  .flip{animation:flip .22s ease}
+  @keyframes flip{from{opacity:.35}to{opacity:1}}
 
   /* ---------- Cards / sections ---------- */
   main{padding:22px 0 44px}
@@ -623,32 +628,41 @@ function render(){
 }
 
 /* ---------- view routing: home (tiles) <-> one category ---------- */
-function showHome(preserveScroll){
+function playAnim(el, cls){
+  if (!el) return;
+  el.classList.remove("anim-fwd","anim-back","flip");
+  void el.offsetWidth;                 // force reflow so the animation restarts
+  el.classList.add(cls);
+}
+
+function showHome(preserveScroll, animate){
   document.getElementById("detail").hidden = true;
   document.getElementById("home").hidden = false;
   localStorage.setItem("ya-view", "");
   if (!preserveScroll) window.scrollTo(0,0);
+  if (animate) playAnim(document.getElementById("tiles"), "anim-back");
 }
 
-function showSection(id, preserveScroll){
+function showSection(id, preserveScroll, animate){
   const body = SECTION_RENDERERS[id] ? SECTION_RENDERERS[id]() : "";
-  document.getElementById("view").innerHTML =
-    `<div class="fade">${body}
-       <button class="tomenu" type="button" onclick="goHome()">
-         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m15 5-7 7 7 7"/></svg>
-         ${esc(UI.toMenu[lang])}
-       </button>
-     </div>`;
+  const view = document.getElementById("view");
+  view.innerHTML =
+    `${body}
+     <button class="tomenu" type="button" onclick="goHome()">
+       <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m15 5-7 7 7 7"/></svg>
+       ${esc(UI.toMenu[lang])}
+     </button>`;
   document.getElementById("home").hidden = true;
   document.getElementById("detail").hidden = false;
   localStorage.setItem("ya-view", id);   // remember where we are
   if (!preserveScroll) window.scrollTo(0,0);
+  if (animate) playAnim(view, "anim-fwd");
 }
 
-function route(preserveScroll){
+function route(preserveScroll, animate){
   const id = decodeURIComponent(location.hash.replace(/^#/,""));
-  if (SECTION_RENDERERS[id]) showSection(id, preserveScroll);
-  else showHome(preserveScroll);
+  if (SECTION_RENDERERS[id]) showSection(id, preserveScroll, animate);
+  else showHome(preserveScroll, animate);
 }
 
 function goHome(){
@@ -670,10 +684,12 @@ function setLang(l){
   const accs = document.querySelectorAll("#view details.acc");
   openIdx.forEach(i=>{ if (accs[i]) accs[i].open = true; });
   window.scrollTo(0, y);
+  const onDetail = !document.getElementById("detail").hidden;
+  playAnim(onDetail ? document.getElementById("view") : document.getElementById("tiles"), "flip");
   refreshInstall();
 }
 
-window.addEventListener("hashchange", ()=>route());
+window.addEventListener("hashchange", ()=>route(false, true));
 
 // Restore the last-viewed category (persists across reloads / closing the tab).
 if (!location.hash){
