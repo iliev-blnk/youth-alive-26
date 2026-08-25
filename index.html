@@ -196,14 +196,11 @@
   .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
-  /* transport steps */
-  .tline{display:grid;gap:0}
-  .tstep{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
-  .tstep:first-child{padding-top:0}
-  .tstep:last-child{border-bottom:0;padding-bottom:0}
-  .tstep .badge{flex:0 0 72px;color:var(--indigo);font-weight:700;font-size:12px;
-    text-transform:uppercase;letter-spacing:.5px}
-  .tstep .ttext{color:var(--ink)}
+  /* transport */
+  .subh{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);font-size:16px;margin:20px 0 8px}
+  .facts.one{grid-template-columns:1fr}
+  ol.steplist{margin:2px 0 0;padding-left:20px}
+  ol.steplist li{margin:6px 0;color:var(--ink)}
 
   /* contact */
   .links{display:grid;gap:8px}
@@ -476,16 +473,37 @@ const DATA = {
 
   transport: {
     title:{ en:"Transportation", tr:"Ulaşım" },
-    ico:"🚆",
-    intro:{ en:"Transport costs are covered individually. Buy train tickets early — they sell out faster than buses.",
-            tr:"Ulaşım masrafları bireysel karşılanır. Tren biletlerini erken alın — otobüslerden daha hızlı tükenir." },
-    steps:[
-      { b:{en:"Arrive",tr:"Varış"}, t:{en:"Friday 18 Sep — arrive in Sapanca by 10–11 AM.",tr:"18 Eylül Cuma — Sapanca'ya 10–11 civarı varın."} },
-      { b:{en:"Return",tr:"Dönüş"}, t:{en:"Sunday 20 Sep — leave Sapanca after 4 PM (book the return ticket in advance).",tr:"20 Eylül Pazar — Sapanca'dan 16:00'dan sonra ayrılın (dönüş biletini önceden alın)."} },
-      { b:{en:"Transfer",tr:"Transfer"}, t:{en:"A shuttle from the train station / bus stop may be arranged — details in the participant group.",tr:"Tren istasyonu / otobüs durağından transfer ayarlanabilir — ayrıntılar katılımcı grubunda."} },
+    intro:{ en:"Transport costs are covered individually. The usual route: reach Bostancı, take the Bostancı–Arifiye train, then a local bus to the campsite. Buy train tickets early — they sell out.",
+            tr:"Ulaşım masrafları bireysel karşılanır. Genel güzergah: Bostancı'ya ulaşın, Bostancı–Arifiye trenine binin, sonra kamp alanına yerel otobüsle gidin. Tren biletlerini erken alın — çabuk tükenir." },
+    routesTitle:{ en:"Getting to Bostancı", tr:"Bostancı'ya ulaşım" },
+    routes:[
+      { name:{en:"From Sabiha Gökçen Airport", tr:"Sabiha Gökçen Havalimanı'ndan"}, steps:[
+        {en:"Take the M4 Kadıköy metro.", tr:"M4 Kadıköy metrosuna binin."},
+        {en:"Get off at Ayrılık Çeşmesi and transfer to Marmaray.", tr:"Ayrılık Çeşmesi'nde inip Marmaray'a aktarma yapın."},
+        {en:"Ride towards Gebze and get off at Bostancı.", tr:"Gebze yönüne binin, Bostancı'da inin."},
+      ]},
+      { name:{en:"From the Bus Terminal (Otogar)", tr:"Otogardan"}, steps:[
+        {en:"Take the M1AB metro (towards Yenikapı).", tr:"M1AB metrosuna binin (Yenikapı yönüne)."},
+        {en:"Get off at Yenikapı and transfer to Marmaray.", tr:"Yenikapı'da inip Marmaray'a aktarma yapın."},
+        {en:"Ride towards Gebze and get off at Bostancı.", tr:"Gebze yönüne binin, Bostancı'da inin."},
+      ]},
+      { name:{en:"By intercity bus instead", tr:"Şehirlerarası otobüs ile"}, steps:[
+        {en:"Buy a ticket from Esenler Bus Terminal to Sakarya Bus Terminal.", tr:"Esenler Otogarı'ndan Sakarya Otobüs Terminali'ne bilet alın."},
+      ]},
     ],
-    note:{ en:"A dedicated transport document will be added here once shared.",
-           tr:"Paylaşıldığında ayrıntılı bir ulaşım belgesi buraya eklenecektir." },
+    faresTitle:{ en:"Fares & tickets", tr:"Ücretler & biletler" },
+    fares:[
+      { k:{en:"Marmaray",tr:"Marmaray"}, v:{en:"Full ≤ 82.17 TL · Discounted ≤ 37.13 TL",tr:"Tam ≤ 82,17 TL · İndirimli ≤ 37,13 TL"} },
+      { k:{en:"Metro",tr:"Metro"}, v:{en:"Full 46.20 TL · Discounted 22.55 TL",tr:"Tam 46,20 TL · İndirimli 22,55 TL"} },
+      { k:{en:"İETT bus",tr:"İETT otobüs"}, v:{en:"Full 46.20 TL · Discounted 22.55 TL",tr:"Tam 46,20 TL · İndirimli 22,55 TL"} },
+      { k:{en:"Bostancı–Arifiye train",tr:"Bostancı–Arifiye treni"}, v:{en:"380 TL one-way (760 TL round-trip)",tr:"Tek yön 380 TL (gidiş-dönüş 760 TL)"} },
+      { k:{en:"Bus · Esenler (European side)",tr:"Otobüs · Esenler (Avrupa)"}, v:{en:"800 TL one-way (1,600 TL round-trip)",tr:"Tek yön 800 TL (gidiş-dönüş 1.600 TL)"} },
+      { k:{en:"Bus · Harem (Anatolian side)",tr:"Otobüs · Harem (Anadolu)"}, v:{en:"600 TL one-way (1,200 TL round-trip)",tr:"Tek yön 600 TL (gidiş-dönüş 1.200 TL)"} },
+    ],
+    arrival:{ en:"The campsite is far from the centre, so take the local <b>Sapanca–Yanık</b> bus (every 20–30 min). Istanbulkart and other city cards are NOT accepted — pay by debit/credit card. Fare is no more than 80 TL.",
+              tr:"Kamp alanı merkeze uzak, bu yüzden yerel <b>Sapanca–Yanık</b> otobüsüne binin (her 20–30 dk). İstanbulkart ve diğer şehir kartları geçmez — banka/kredi kartıyla ödeyin. Ücret 80 TL'yi geçmez." },
+    ret:{ en:"The <b>Arifiye–Bostancı train departs at 20:03.</b> If you miss it, you'll need to stay overnight or return by bus.",
+          tr:"<b>Arifiye–Bostancı treni 20:03'te kalkar.</b> Kaçıranlar gece konaklamak ya da otobüsle dönmek zorunda kalır." },
   },
 
   music: {
@@ -591,10 +609,24 @@ function renderDont(d){
 }
 
 function renderTransport(d){
-  const steps = d.steps.map(s=>`<div class="tstep"><span class="badge">${L(s.b)}</span><div class="ttext">${L(s.t)}</div></div>`).join("");
+  const routes = d.routes.map((r,i)=>{
+    const steps = r.steps.map(s=>`<li>${L(s)}</li>`).join("");
+    return `<details class="acc" ${i===0?"open":""}>
+      <summary>${L(r.name)} <span class="caret">▾</span></summary>
+      <div class="body"><ol class="steplist">${steps}</ol></div>
+    </details>`;
+  }).join("");
+  const fares = d.fares.map(f=>`<div class="fact"><div class="k">${L(f.k)}</div><div class="v">${L(f.v)}</div></div>`).join("");
+  const arrLabel = lang==="en" ? "On arrival in Sapanca" : "Sapanca'ya varışta";
+  const retLabel = lang==="en" ? "Return" : "Dönüş";
   return sectionShell("transport", L(d.title),
-    `<p class="intro">${L(d.intro)}</p><div class="tline">${steps}</div>`,
-    `<div class="callout">${L(d.note)}</div>`);
+    `<p class="intro">${L(d.intro)}</p>
+     <div class="subh">${L(d.routesTitle)}</div>
+     ${routes}
+     <div class="subh">${L(d.faresTitle)}</div>
+     <div class="facts one">${fares}</div>
+     <div class="tip"><b>${arrLabel}</b><br>${d.arrival[lang]}</div>
+     <div class="tip"><b>${retLabel}</b><br>${d.ret[lang]}</div>`);
 }
 
 function renderMusic(d){
