@@ -183,6 +183,8 @@
   .pl-cap{font-weight:700;color:var(--indigo);font-size:12.5px;text-transform:uppercase;
     letter-spacing:.5px;margin:0 0 8px}
   .spotify{width:100%;border:0;border-radius:14px;display:block}
+  .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
   /* transport steps */
   .tline{display:grid;gap:0}
@@ -309,6 +311,7 @@ const ICONS = {
   dont:     '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m6.2 6.2 11.6 11.6"/></svg>',
   transport:'<svg class="ic" viewBox="0 0 24 24"><rect x="6" y="3.5" width="12" height="13" rx="3.5"/><path d="M6 10.5h12"/><circle cx="9.5" cy="13.3" r=".9"/><circle cx="14.5" cy="13.3" r=".9"/><path d="M8.5 16.5 7 20M15.5 16.5 17 20"/></svg>',
   music:    '<svg class="ic" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/></svg>',
+  videos:   '<svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="3"/><path d="M10.5 9.2l4.2 2.8-4.2 2.8z"/></svg>',
   notes:    '<svg class="ic" viewBox="0 0 24 24"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.5.4.8 1 .8 1.6v.3h6v-.3c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/></svg>',
   contact:  '<svg class="ic" viewBox="0 0 24 24"><path d="M6.8 3.5H10l1.4 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.4v3.2a1.8 1.8 0 0 1-2 1.8A15.5 15.5 0 0 1 4 5.5a1.8 1.8 0 0 1 1.8-2Z"/></svg>',
   form:     '<svg class="ic" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>',
@@ -324,6 +327,7 @@ const DATA = {
     { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
     { id:"transport", en:"Transport",    tr:"Ulaşım",       he:"Getting there",       ht:"Nasıl gidilir" },
     { id:"music",     en:"Music",        tr:"Müzik",        he:"Songs & lyrics",      ht:"Şarkı & sözler" },
+    { id:"videos",    en:"Videos",       tr:"Videolar",     he:"Watch the promos",    ht:"Tanıtım videoları" },
     { id:"notes",     en:"Notes",        tr:"Notlar",       he:"Good to know",        ht:"Faydalı bilgiler" },
     { id:"contact",   en:"Contact",      tr:"İletişim",     he:"Register & ask",      ht:"Kayıt & iletişim" },
   ],
@@ -482,6 +486,16 @@ const DATA = {
     ],
   },
 
+  videos: {
+    title:{ en:"Videos", tr:"Videolar" },
+    intro:{ en:"A taste of what Youth Alive camp is like — watch the promos from the last two years.",
+            tr:"Youth Alive kampının nasıl bir şey olduğuna dair bir tat — son iki yılın tanıtım videolarını izleyin." },
+    videos:[
+      { id:"1RRckt7qJNLxkQrUhO7SDqfvCZYuVjMPq", en:"Youth Alive 2024", tr:"Youth Alive 2024" },
+      { id:"1mRhgz4QO_7FU5sSVHNei8i9nPjJ7kixj", en:"Youth Alive 2025", tr:"Youth Alive 2025" },
+    ],
+  },
+
   notes: {
     title:{ en:"Good to know", tr:"Bilinmesi gereken" },
     ico:"💡",
@@ -582,6 +596,16 @@ function renderMusic(d){
     `<p class="intro">${L(d.intro)}</p>${lists}`);
 }
 
+function renderVideos(d){
+  const vids = d.videos.map(v=>`
+    <div class="pl">
+      <div class="pl-cap">${L(v)}</div>
+      <div class="video"><iframe title="${L(v)}" loading="lazy" allow="autoplay; fullscreen"
+        allowfullscreen src="https://drive.google.com/file/d/${encodeURIComponent(v.id)}/preview"></iframe></div>
+    </div>`).join("");
+  return sectionShell("videos", L(d.title), `<p class="intro">${L(d.intro)}</p>${vids}`);
+}
+
 function renderNotes(d){
   const items = d.items.map(i=>`<div class="tip"><b>${L(i.t)}</b><br>${L(i.d)}</div>`).join("");
   return sectionShell("notes", L(d.title), items);
@@ -604,6 +628,7 @@ const SECTION_RENDERERS = {
   dont:      ()=>renderDont(DATA.dont),
   transport: ()=>renderTransport(DATA.transport),
   music:     ()=>renderMusic(DATA.music),
+  videos:    ()=>renderVideos(DATA.videos),
   notes:     ()=>renderNotes(DATA.notes),
   contact:   ()=>renderContact(DATA.contact),
 };
