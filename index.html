@@ -41,6 +41,17 @@
   a{color:var(--indigo);font-weight:600;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
 
+  /* App shell: full-bleed on phones, a centered card on larger screens */
+  .shell{max-width:540px;margin:0 auto;position:relative}
+  @media(min-width:600px){
+    body{background:#EAE3D4}
+    .shell{margin:26px auto 44px;background:var(--cream);border-radius:26px;
+      box-shadow:0 24px 70px rgba(35,33,53,.16)}
+    header.hero{border-radius:26px 26px 0 0}
+    footer{border-radius:0 0 26px 26px}
+    .dhead{position:static}
+  }
+
   /* ---------- Mobile-first base ---------- */
   html,body{overflow-x:clip}
   *{-webkit-tap-highlight-color:transparent}
@@ -78,7 +89,6 @@
 
   /* ---------- Home tiles (the category menu) ---------- */
   .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 0 8px}
-  @media(min-width:600px){.tiles{grid-template-columns:repeat(3,1fr)}}
   .tile{position:relative;display:flex;flex-direction:column;gap:12px;align-items:flex-start;
     background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;
     text-decoration:none;color:var(--ink);box-shadow:var(--shadow);
@@ -237,6 +247,7 @@
 </head>
 <body>
 
+<div class="shell">
 <div id="home">
 <header class="hero">
   <h1 style="margin:0"><img class="art" id="hero-art" src="artwork-en.png" width="760" height="760" alt="Youth Alive Summer Camp — Bound by Love"></h1>
@@ -275,6 +286,7 @@
 <footer>
   <span data-i18n="footer">Youth Alive 26 · See you at camp</span> <span class="heart">♥</span>
 </footer>
+</div><!-- /.shell -->
 
 <script>
 /* ============================================================
