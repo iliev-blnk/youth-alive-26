@@ -1,6 +1,6 @@
 /* Youth Alive 26 — minimal offline service worker.
    Bump CACHE when you change content so phones get the update. */
-const CACHE = "ya26-v15";
+const CACHE = "ya26-v16";
 const SHELL = [
   "./",
   "./index.html",
@@ -28,14 +28,27 @@ self.addEventListener("fetch", e => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
 
-  // Same-origin shell: cache-first, fall back to network and cache it.
   if (url.origin === location.origin) {
+    const isDoc = req.mode === "navigate" ||
+      url.pathname.endsWith("/") || url.pathname.endsWith("index.html");
+    if (isDoc) {
+      // The page itself: NETWORK-FIRST so updates always show; cache is offline fallback.
+      e.respondWith(
+        fetch(req).then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
+          return res;
+        }).catch(() => caches.match(req).then(h => h || caches.match("./index.html")))
+      );
+      return;
+    }
+    // Other same-origin assets (icons, artwork, manifest): cache-first.
     e.respondWith(
       caches.match(req).then(hit => hit || fetch(req).then(res => {
         const copy = res.clone();
         caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
         return res;
-      }).catch(() => caches.match("./index.html")))
+      }))
     );
     return;
   }
