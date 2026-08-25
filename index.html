@@ -55,14 +55,9 @@
   }
 
   /* ---------- Hero ---------- */
-  header.hero{position:relative;text-align:center;
-    background:radial-gradient(135% 130% at 50% -22%, var(--sun-lite) 0%, var(--sun) 74%);
-    padding:calc(30px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left))}
-  .logo-plate{display:inline-block;background:#fff;border-radius:22px;padding:20px 26px;
-    box-shadow:0 12px 34px rgba(35,33,53,.16);max-width:min(84%,340px)}
-  .logo{display:block;width:100%;height:auto}
-  .tagline{font-family:"Fraunces",serif;font-style:italic;font-weight:400;color:var(--indigo);
-    font-size:clamp(15px,4vw,18px);margin:14px 0 0}
+  header.hero{position:relative;text-align:center;background:var(--sun);
+    padding:calc(22px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) 24px calc(18px + env(safe-area-inset-left))}
+  .art{display:block;width:min(82%,370px);height:auto;margin:0 auto}
   .meta{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
   .pill{background:rgba(255,255,255,.92);color:var(--indigo);border-radius:999px;padding:8px 14px;
     font-weight:600;font-size:13.5px;display:inline-flex;gap:6px;align-items:center}
@@ -242,8 +237,7 @@
 
 <div id="home">
 <header class="hero">
-  <h1 class="logo-plate"><img class="logo" src="logo.png" width="778" height="420" alt="Youth Alive Summer Camp"></h1>
-  <div class="tagline" data-i18n="tagline">Bound by Love</div>
+  <h1 style="margin:0"><img class="art" id="hero-art" src="artwork-en.png" width="760" height="760" alt="Youth Alive Summer Camp — Bound by Love"></h1>
   <div class="meta">
     <span class="pill">
       <svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
@@ -258,10 +252,6 @@
     <button data-lang="en" onclick="setLang('en')" aria-pressed="true">EN</button>
     <button data-lang="tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
   </div>
-  <svg class="hero-range" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
-    <path class="back" d="M0,80 L0,44 L200,58 L420,26 L640,54 L860,22 L1080,54 L1300,30 L1440,50 L1440,80 Z"/>
-    <path class="front" d="M0,80 L0,58 L180,64 L360,38 L520,62 L700,34 L900,64 L1080,42 L1280,66 L1440,46 L1440,80 Z"/>
-  </svg>
   </header>
   <main class="wrap"><div class="tiles" id="tiles"></div></main>
 </div>
@@ -645,6 +635,12 @@ function render(){
   });
   document.querySelectorAll("[data-lang]").forEach(b=>
     b.setAttribute("aria-pressed", b.dataset.lang===lang));
+  const art = document.getElementById("hero-art");
+  if (art){
+    art.src = lang==="en" ? "artwork-en.png" : "artwork-tr.png";
+    art.alt = lang==="en" ? "Youth Alive Summer Camp — Bound by Love"
+                          : "Youth Alive Yaz Kampı — Sevgiyle Birleşen";
+  }
   renderTiles();
 }
 

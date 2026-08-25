@@ -1,11 +1,12 @@
 /* Youth Alive 26 — minimal offline service worker.
    Bump CACHE when you change content so phones get the update. */
-const CACHE = "ya26-v8";
+const CACHE = "ya26-v9";
 const SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./logo.png",
+  "./artwork-en.png",
+  "./artwork-tr.png",
   "./icon-192.png",
   "./icon-512.png",
   "./apple-touch-icon.png",
