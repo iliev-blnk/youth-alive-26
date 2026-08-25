@@ -196,6 +196,7 @@
   .video{position:relative;display:block;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
   .video.portrait{aspect-ratio:9/16;max-width:300px;margin:0 auto}
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
   .vfacade,.vlink{cursor:pointer;background:var(--indigo);text-decoration:none}
   .vthumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .vplay{position:absolute;inset:0;display:grid;place-items:center}
@@ -529,7 +530,7 @@ const DATA = {
     intro:{ en:"Watch the Youth Alive 26 promo and get a taste of past camps.",
             tr:"Youth Alive 26 tanıtımını izleyin ve geçmiş kamplardan bir tat alın." },
     videos:[
-      { yt:"RKmZRsyr3Rc", watch:true, en:"Youth Alive 26 · Promo", tr:"Youth Alive 26 · Tanıtım" },
+      { file:"ya26-promo.mp4", poster:"ya26-poster.jpg", portrait:true, en:"Youth Alive 26 · Promo", tr:"Youth Alive 26 · Tanıtım" },
       { yt:"9RNj5_wufOw", en:"Youth Alive 2025", tr:"Youth Alive 2025" },
       { yt:"RSJfrS9VwG4", en:"Youth Alive 2024 · İstanbul", tr:"Youth Alive 2024 · İstanbul" },
     ],
@@ -653,7 +654,11 @@ function renderVideos(d){
   const play = '<span class="vplay"><svg viewBox="0 0 24 24" width="64" height="64" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(20,18,40,.6)"/><path d="M10 8.2l6 3.8-6 3.8z" fill="#fff"/></svg></span>';
   const vids = d.videos.map(v=>{
     let media;
-    if (v.yt && v.watch){
+    if (v.file){
+      // Self-hosted video: native player, plays inline everywhere (no platform limits)
+      media = `<video class="video${v.portrait ? " portrait" : ""}" controls playsinline preload="metadata"${v.poster ? ` poster="${v.poster}"` : ""}>
+        <source src="${v.file}" type="video/mp4"></video>`;
+    } else if (v.yt && v.watch){
       // Embedding disabled by the owner -> clean poster that opens the video on YouTube
       const yt = encodeURIComponent(v.yt);
       media = `<a class="video vlink" href="https://www.youtube.com/watch?v=${yt}" target="_blank" rel="noopener" aria-label="${L(v)}">

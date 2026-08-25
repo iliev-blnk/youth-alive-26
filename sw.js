@@ -1,6 +1,6 @@
 /* Youth Alive 26 — minimal offline service worker.
    Bump CACHE when you change content so phones get the update. */
-const CACHE = "ya26-v20";
+const CACHE = "ya26-v21";
 const SHELL = [
   "./",
   "./index.html",
@@ -27,6 +27,9 @@ self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
+
+  // Let the browser handle video + range requests directly (seeking; no cache bloat).
+  if (req.headers.has("range") || url.pathname.endsWith(".mp4")) return;
 
   if (url.origin === location.origin) {
     const isDoc = req.mode === "navigate" ||
