@@ -195,12 +195,11 @@
   .spotify{width:100%;border:0;border-radius:14px;display:block}
   .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .vposter{position:relative;display:block;width:100%;aspect-ratio:16/9;border-radius:14px;
-    overflow:hidden;background:var(--indigo)}
+  .vfacade{cursor:pointer;background:var(--indigo)}
   .vthumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .vplay{position:absolute;inset:0;display:grid;place-items:center}
   .vplay svg{transition:transform .15s}
-  .vposter:hover .vplay svg{transform:scale(1.07)}
+  .vfacade:hover .vplay svg{transform:scale(1.07)}
 
   /* transport */
   .subh{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);font-size:16px;margin:20px 0 8px}
@@ -529,6 +528,7 @@ const DATA = {
     videos:[
       { id:"120CxRAEZe8LtZmM2lsRzzW6gRZrc1wQg", en:"Youth Alive 26 · Promo", tr:"Youth Alive 26 · Tanıtım" },
       { yt:"RSJfrS9VwG4", en:"Youth Alive 2024 · İstanbul", tr:"Youth Alive 2024 · İstanbul" },
+      { id:"1mRhgz4QO_7FU5sSVHNei8i9nPjJ7kixj", en:"Youth Alive 2025", tr:"Youth Alive 2025" },
     ],
   },
 
@@ -656,11 +656,12 @@ function renderVideos(d){
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
         src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.yt)}?rel=0"></iframe></div>`;
     } else {
-      // Drive: a clean poster that opens the video, avoiding the buggy inline player
+      // Drive: poster that loads the player INLINE on tap (no jumping out to Drive)
       const id = encodeURIComponent(v.id);
-      media = `<a class="vposter" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener" aria-label="${L(v)}">
+      media = `<div class="video vfacade" role="button" tabindex="0" aria-label="${L(v)}"
+        data-src="https://drive.google.com/file/d/${id}/preview">
         <img class="vthumb" src="https://drive.google.com/thumbnail?id=${id}&sz=w1000" alt="" loading="lazy" onerror="this.remove()">
-        ${play}</a>`;
+        ${play}</div>`;
     }
     return `<div class="pl"><div class="pl-cap">${L(v)}</div>${media}</div>`;
   }).join("");
@@ -793,6 +794,23 @@ function setLang(l){
 }
 
 window.addEventListener("hashchange", ()=>route(false, true));
+
+// Click a Drive video poster -> load the player inline (don't leave the page).
+function playFacade(f){
+  const src = f.getAttribute("data-src");
+  if (!src) return;
+  f.innerHTML = `<iframe title="video" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen src="${src}"></iframe>`;
+  f.classList.remove("vfacade");
+}
+document.addEventListener("click", e=>{
+  const f = e.target.closest && e.target.closest(".vfacade");
+  if (f) playFacade(f);
+});
+document.addEventListener("keydown", e=>{
+  if ((e.key==="Enter" || e.key===" ") && e.target.classList && e.target.classList.contains("vfacade")){
+    e.preventDefault(); playFacade(e.target);
+  }
+});
 
 // Restore the last-viewed category (persists across reloads / closing the tab).
 if (!location.hash){
