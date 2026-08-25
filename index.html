@@ -195,6 +195,12 @@
   .spotify{width:100%;border:0;border-radius:14px;display:block}
   .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vposter{position:relative;display:block;width:100%;aspect-ratio:16/9;border-radius:14px;
+    overflow:hidden;background:var(--indigo)}
+  .vthumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .vplay{position:absolute;inset:0;display:grid;place-items:center}
+  .vplay svg{transition:transform .15s}
+  .vposter:hover .vplay svg{transform:scale(1.07)}
 
   /* transport */
   .subh{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);font-size:16px;margin:20px 0 8px}
@@ -518,12 +524,11 @@ const DATA = {
 
   videos: {
     title:{ en:"Videos", tr:"Videolar" },
-    intro:{ en:"Watch the Youth Alive 26 promo and get a taste of the last two years.",
-            tr:"Youth Alive 26 tanıtımını izleyin ve son iki yıla göz atın." },
+    intro:{ en:"Watch the Youth Alive 26 promo and get a taste of past camps.",
+            tr:"Youth Alive 26 tanıtımını izleyin ve geçmiş kamplardan bir tat alın." },
     videos:[
       { id:"120CxRAEZe8LtZmM2lsRzzW6gRZrc1wQg", en:"Youth Alive 26 · Promo", tr:"Youth Alive 26 · Tanıtım" },
-      { id:"1RRckt7qJNLxkQrUhO7SDqfvCZYuVjMPq", en:"Youth Alive 2024", tr:"Youth Alive 2024" },
-      { id:"1mRhgz4QO_7FU5sSVHNei8i9nPjJ7kixj", en:"Youth Alive 2025", tr:"Youth Alive 2025" },
+      { yt:"RSJfrS9VwG4", en:"Youth Alive 2024 · İstanbul", tr:"Youth Alive 2024 · İstanbul" },
     ],
   },
 
@@ -642,12 +647,23 @@ function renderMusic(d){
 }
 
 function renderVideos(d){
-  const vids = d.videos.map(v=>`
-    <div class="pl">
-      <div class="pl-cap">${L(v)}</div>
-      <div class="video"><iframe title="${L(v)}" loading="lazy" allow="autoplay; fullscreen"
-        allowfullscreen src="https://drive.google.com/file/d/${encodeURIComponent(v.id)}/preview"></iframe></div>
-    </div>`).join("");
+  const play = '<span class="vplay"><svg viewBox="0 0 24 24" width="64" height="64" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(20,18,40,.6)"/><path d="M10 8.2l6 3.8-6 3.8z" fill="#fff"/></svg></span>';
+  const vids = d.videos.map(v=>{
+    let media;
+    if (v.yt){
+      // YouTube plays reliably inline (Drive's inline player is janky on mobile)
+      media = `<div class="video"><iframe title="${L(v)}" loading="lazy" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.yt)}?rel=0"></iframe></div>`;
+    } else {
+      // Drive: a clean poster that opens the video, avoiding the buggy inline player
+      const id = encodeURIComponent(v.id);
+      media = `<a class="vposter" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener" aria-label="${L(v)}">
+        <img class="vthumb" src="https://drive.google.com/thumbnail?id=${id}&sz=w1000" alt="" loading="lazy" onerror="this.remove()">
+        ${play}</a>`;
+    }
+    return `<div class="pl"><div class="pl-cap">${L(v)}</div>${media}</div>`;
+  }).join("");
   return sectionShell("videos", L(d.title), `<p class="intro">${L(d.intro)}</p>${vids}`);
 }
 
