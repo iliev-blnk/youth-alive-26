@@ -1,9 +1,10 @@
 /* Youth Alive 26 — minimal offline service worker.
    Bump CACHE when you change content so phones get the update. */
-const CACHE = "ya26-v22";
+const CACHE = "ya26-v23";
 const SHELL = [
   "./",
   "./index.html",
+  "./access.js",
   "./manifest.webmanifest",
   "./artwork-en.png",
   "./artwork-tr.png",
@@ -33,7 +34,8 @@ self.addEventListener("fetch", e => {
 
   if (url.origin === location.origin) {
     const isDoc = req.mode === "navigate" ||
-      url.pathname.endsWith("/") || url.pathname.endsWith("index.html");
+      url.pathname.endsWith("/") || url.pathname.endsWith("index.html") ||
+      url.pathname.endsWith("access.js");   // keep whitelist fresh online
     if (isDoc) {
       // The page itself: NETWORK-FIRST so updates always show; cache is offline fallback.
       e.respondWith(

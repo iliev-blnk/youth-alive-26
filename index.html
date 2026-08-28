@@ -17,6 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<script src="access.js"></script>
+<script>try{if(localStorage.getItem("ya-access"))document.documentElement.classList.add("ya-ok");}catch(e){}</script>
 <style>
   :root{
     --cream:#FBF6EC; --card:#FFFFFF;
@@ -40,6 +42,32 @@
   }
   a{color:var(--indigo);font-weight:600;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+
+  /* ---------- Access gate ---------- */
+  .gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:auto;
+    padding:calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
+    background:radial-gradient(130% 120% at 50% -10%, var(--sun-lite) 0%, var(--sun) 72%)}
+  html.ya-ok .gate{display:none}
+  html:not(.ya-ok){overflow:hidden}
+  .gate-card{width:100%;max-width:360px;background:#fff;border-radius:22px;text-align:center;
+    box-shadow:0 24px 70px rgba(35,33,53,.22);padding:26px 24px}
+  .gate-logo{width:min(72%,220px);height:auto;display:block;margin:0 auto 16px}
+  .gate-title{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);
+    font-size:21px;line-height:1.2;margin:0 0 6px}
+  .gate-sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+  #gate-form{display:flex;flex-direction:column;gap:10px}
+  #gate-email{width:100%;font-size:16px;padding:13px 15px;border:1px solid var(--line);
+    border-radius:12px;font-family:inherit;color:var(--ink);background:var(--soft);text-align:center}
+  #gate-email:focus{outline:none;border-color:var(--indigo);background:#fff}
+  #gate-btn{min-height:50px;border:0;border-radius:12px;background:var(--indigo);color:#fff;
+    font-family:"Figtree",sans-serif;font-weight:700;font-size:16px;cursor:pointer}
+  #gate-btn:active{transform:scale(.98)}
+  .gate-err{color:#CE5B4E;font-size:13px;font-weight:600;margin:12px 0 0}
+  .gate-err[hidden]{display:none}
+  .gate-lang{display:inline-flex;gap:2px;background:var(--soft);border-radius:999px;padding:4px;margin-top:18px}
+  .gate-lang button{border:0;background:transparent;color:var(--indigo);font-family:"Figtree",sans-serif;
+    font-weight:700;font-size:13px;padding:6px 15px;border-radius:999px;cursor:pointer}
+  .gate-lang button[aria-pressed="true"]{background:var(--indigo);color:#fff}
 
   /* App shell: full-bleed on phones, a centered card on larger screens */
   .shell{max-width:540px;margin:0 auto;position:relative}
@@ -252,6 +280,24 @@
 </style>
 </head>
 <body>
+
+<div id="gate" class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gate-card">
+    <img class="gate-logo" id="gate-logo" src="artwork-en.png" alt="Youth Alive Summer Camp">
+    <h1 class="gate-title" id="gate-title">Enter your email to continue</h1>
+    <p class="gate-sub" id="gate-sub">Use the email you registered for camp with.</p>
+    <form id="gate-form" novalidate>
+      <input id="gate-email" type="email" inputmode="email" autocomplete="email"
+        autocapitalize="off" spellcheck="false" required placeholder="you@example.com">
+      <button type="submit" id="gate-btn">Enter</button>
+    </form>
+    <p class="gate-err" id="gate-err" hidden></p>
+    <div class="gate-lang">
+      <button type="button" data-lang="en" onclick="setLang('en')" aria-pressed="true">EN</button>
+      <button type="button" data-lang="tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
+    </div>
+  </div>
+</div>
 
 <div class="shell">
 <div id="home">
@@ -719,6 +765,55 @@ function renderTiles(){
     </a>`).join("");
 }
 
+/* ---------- Access gate (client-side soft gate; emails stored as hashes) ---------- */
+const GATE = {
+  title:{en:"Enter your email to continue", tr:"Devam etmek için e-postanızı girin"},
+  sub:{en:"Use the email you registered for camp with.", tr:"Kampa kaydolduğunuz e-posta ile girin."},
+  ph:{en:"you@example.com", tr:"siz@ornek.com"},
+  btn:{en:"Enter", tr:"Giriş yap"},
+  err:{en:"That email isn't on the list. Please check with the Youth Alive team.",
+       tr:"Bu e-posta listede yok. Lütfen Youth Alive ekibiyle iletişime geçin."},
+};
+const gEl = id => document.getElementById(id);
+const normEmail = s => String(s||"").trim().toLowerCase();
+const gateList = () => Array.isArray(window.YA_ALLOW) ? window.YA_ALLOW.map(h=>String(h).toLowerCase()) : [];
+async function sha256hex(s){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function paintGate(){
+  if (!gEl("gate-title")) return;
+  gEl("gate-title").textContent = GATE.title[lang];
+  gEl("gate-sub").textContent   = GATE.sub[lang];
+  gEl("gate-btn").textContent   = GATE.btn[lang];
+  gEl("gate-email").placeholder = GATE.ph[lang];
+  gEl("gate-logo").src = lang==="en" ? "artwork-en.png" : "artwork-tr.png";
+}
+function openApp(){ document.documentElement.classList.add("ya-ok"); }
+function initGate(){
+  const list = gateList();
+  const saved = (localStorage.getItem("ya-access")||"").toLowerCase();
+  if (list.length===0 || (saved && list.includes(saved))){ openApp(); return; } // allowed / gate off
+  if (saved && !list.includes(saved)) localStorage.removeItem("ya-access");      // removed from list
+  document.documentElement.classList.remove("ya-ok");
+  paintGate();
+  setTimeout(()=>{ const i=gEl("gate-email"); if (i) i.focus(); }, 60);
+  gEl("gate-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const err = gEl("gate-err");
+    const hash = await sha256hex(normEmail(gEl("gate-email").value));
+    const l = gateList();
+    if (l.length===0 || l.includes(hash)){
+      localStorage.setItem("ya-access", hash);
+      err.hidden = true;
+      openApp();
+    } else {
+      err.textContent = GATE.err[lang];
+      err.hidden = false;
+    }
+  });
+}
+
 /* static i18n bits + toggle state + tiles. Does not switch views. */
 function render(){
   document.documentElement.lang = lang;
@@ -743,6 +838,7 @@ function render(){
                           : "Youth Alive Yaz Kampı — Sevgiyle Birleşen";
   }
   renderTiles();
+  paintGate();
 }
 
 /* ---------- view routing: home (tiles) <-> one category ---------- */
@@ -833,6 +929,7 @@ if (!location.hash){
 }
 render();
 route();
+initGate();
 
 /* service worker for offline use */
 if ("serviceWorker" in navigator){
