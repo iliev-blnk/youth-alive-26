@@ -1,7 +1,6 @@
 /* Youth Alive 26 — access whitelist (client-side gate).
-   Values are SHA-256 hashes of allowed emails (lower-cased, trimmed) so real
-   addresses are NOT exposed here. Source of truth: "Contact List.xlsx".
-   Add one: printf '%s' "person@example.com" | sha256sum  -> paste the hash.
+   SHA-256 hashes of allowed emails (lower-cased, trimmed) — real addresses are NOT
+   exposed here. To add one: printf '%s' "person@example.com" | sha256sum -> paste it.
    Empty list = gate disabled. */
 window.YA_ALLOW = [
   "fe34631eaf76912e3f00c99c88aea19516308c95d1001c655c9ebb6e47f89dde",

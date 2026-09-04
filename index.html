@@ -64,6 +64,8 @@
   #gate-btn:active{transform:scale(.98)}
   .gate-err{color:#CE5B4E;font-size:13px;font-weight:600;margin:12px 0 0}
   .gate-err[hidden]{display:none}
+  .gate-help{display:inline-block;margin-top:14px;color:var(--indigo);font-weight:700;
+    font-size:13px;text-decoration:underline}
   .gate-lang{display:inline-flex;gap:2px;background:var(--soft);border-radius:999px;padding:4px;margin-top:18px}
   .gate-lang button{border:0;background:transparent;color:var(--indigo);font-family:"Figtree",sans-serif;
     font-weight:700;font-size:13px;padding:6px 15px;border-radius:999px;cursor:pointer}
@@ -292,6 +294,7 @@
       <button type="submit" id="gate-btn">Enter</button>
     </form>
     <p class="gate-err" id="gate-err" hidden></p>
+    <a class="gate-help" id="gate-help" href="https://www.instagram.com/youth.alivetr/" target="_blank" rel="noopener">Can't get in? Message us on Instagram</a>
     <div class="gate-lang">
       <button type="button" data-lang="en" onclick="setLang('en')" aria-pressed="true">EN</button>
       <button type="button" data-lang="tr" onclick="setLang('tr')" aria-pressed="false">TR</button>
@@ -771,8 +774,9 @@ const GATE = {
   sub:{en:"Use the email you registered for camp with.", tr:"Kampa kaydolduğunuz e-posta ile girin."},
   ph:{en:"you@example.com", tr:"siz@ornek.com"},
   btn:{en:"Enter", tr:"Giriş yap"},
-  err:{en:"That email isn't on the list. Please check with the Youth Alive team.",
-       tr:"Bu e-posta listede yok. Lütfen Youth Alive ekibiyle iletişime geçin."},
+  err:{en:"That email isn't on the list. Use the email you registered with, or message us.",
+       tr:"Bu e-posta listede yok. Kaydolduğunuz e-postayı kullanın veya bize yazın."},
+  help:{en:"Can't get in? Message us on Instagram", tr:"Giriş yapamıyor musunuz? Instagram'dan yazın"},
 };
 const gEl = id => document.getElementById(id);
 const normEmail = s => String(s||"").trim().toLowerCase();
@@ -788,6 +792,7 @@ function paintGate(){
   gEl("gate-btn").textContent   = GATE.btn[lang];
   gEl("gate-email").placeholder = GATE.ph[lang];
   gEl("gate-logo").src = lang==="en" ? "artwork-en.png" : "artwork-tr.png";
+  if (gEl("gate-help")) gEl("gate-help").textContent = GATE.help[lang];
 }
 function openApp(){ document.documentElement.classList.add("ya-ok"); }
 function initGate(){
