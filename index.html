@@ -256,7 +256,8 @@
     font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
 
   /* transport */
-  .subh{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);font-size:16px;margin:20px 0 8px}
+  .subh{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);font-size:16px;margin:22px 0 10px}
+  .lyrics-intro{margin-top:-4px}
   .facts.one{grid-template-columns:1fr}
   ol.steplist{margin:2px 0 0;padding-left:20px}
   ol.steplist li{margin:6px 0;color:var(--ink)}
@@ -414,8 +415,7 @@ const DATA = {
     { id:"packing",   en:"Packing list", tr:"Eşya listesi", he:"What to bring",       ht:"Ne getirmeli" },
     { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
     { id:"transport", en:"Transport",    tr:"Ulaşım",       he:"Getting there",       ht:"Nasıl gidilir" },
-    { id:"music",     en:"Music",        tr:"Müzik",        he:"Playlists",           ht:"Çalma listeleri" },
-    { id:"lyrics",    en:"Lyrics",       tr:"Şarkı sözleri", he:"Sing along",         ht:"Birlikte söyle" },
+    { id:"music",     en:"Music",        tr:"Müzik",        he:"Playlists & lyrics",  ht:"Listeler & sözler" },
     { id:"videos",    en:"Videos",       tr:"Videolar",     he:"Watch the promos",    ht:"Tanıtım videoları" },
     { id:"notes",     en:"Notes",        tr:"Notlar",       he:"Good to know",        ht:"Faydalı bilgiler" },
     { id:"contact",   en:"Contact",      tr:"İletişim",     he:"Register & ask",      ht:"Kayıt & iletişim" },
@@ -587,7 +587,7 @@ const DATA = {
   },
 
   music: {
-    title:{ en:"Music & songs", tr:"Müzik & şarkılar" },
+    title:{ en:"Music & lyrics", tr:"Müzik & sözler" },
     intro:{ en:"Get in the mood for camp — press play and get to know this year's songs before you arrive.",
             tr:"Kamp havasına girin — çalın ve gelmeden önce bu yılın şarkılarını tanıyın." },
     playlists:[
@@ -715,33 +715,34 @@ function renderTransport(d){
      <div class="tip"><b>${retLabel}</b><br>${d.ret[lang]}</div>`);
 }
 
-function renderMusic(d){
-  const lists = d.playlists.map(p=>`
-    <div class="pl">
-      <div class="pl-cap">${L(p)}</div>
-      <iframe class="spotify" title="${L(p)}" loading="lazy" height="352"
-        src="https://open.spotify.com/embed/playlist/${encodeURIComponent(p.id)}?utm_source=generator"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-    </div>`).join("");
-  return sectionShell("music", L(d.title),
-    `<p class="intro">${L(d.intro)}</p>${lists}`);
-}
-
-function renderLyrics(d){
-  const songs = (window.YA_LYRICS||[]).map(s=>{
-    const body = s.b.map(x=>{
-      if (x[0]==="s") return '<div class="ly-sp"></div>';
-      if (x[0]==="h") return `<div class="ly-h">${esc(x[1])}</div>`;
-      return `<div class="ly-l">${esc(x[1])}</div>`;
-    }).join("");
+function songAccordions(){
+  return (window.YA_LYRICS||[]).map(s=>{
+    const body = s.b.map(x=>
+      x[0]==="s" ? '<div class="ly-sp"></div>' :
+      x[0]==="h" ? `<div class="ly-h">${esc(x[1])}</div>` :
+                   `<div class="ly-l">${esc(x[1])}</div>`).join("");
     return `<details class="song">
       <summary><span class="song-n">${s.n}</span><span class="song-t">${esc(s.t)}</span><span class="caret">▾</span></summary>
       <div class="song-body">${body}</div>
     </details>`;
   }).join("");
-  const note = (window.YA_LYRICS && window.YA_LYRICS.length) ? "" :
-    `<div class="callout">${lang==="en"?"Lyrics are loading…":"Sözler yükleniyor…"}</div>`;
-  return sectionShell("lyrics", L(d.title), `<p class="intro">${L(d.intro)}</p>${songs}${note}`);
+}
+
+function renderMusic(d){
+  const lists = d.playlists.map(p=>`
+    <div class="pl">
+      <div class="pl-cap">${L(p)}</div>
+      <iframe class="spotify" title="${L(p)}" loading="lazy" height="152"
+        src="https://open.spotify.com/embed/playlist/${encodeURIComponent(p.id)}?utm_source=generator"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>`).join("");
+  const H = (en,tr)=>`<div class="subh">${lang==="en"?en:tr}</div>`;
+  return sectionShell("music", L(d.title),
+    `<p class="intro">${L(d.intro)}</p>
+     ${H("Playlists","Çalma listeleri")}${lists}
+     ${H("Song lyrics","Şarkı sözleri")}
+     <p class="intro lyrics-intro">${L(DATA.lyrics.intro)}</p>
+     ${songAccordions()}`);
 }
 
 function renderVideos(d){
@@ -798,7 +799,6 @@ const SECTION_RENDERERS = {
   dont:      ()=>renderDont(DATA.dont),
   transport: ()=>renderTransport(DATA.transport),
   music:     ()=>renderMusic(DATA.music),
-  lyrics:    ()=>renderLyrics(DATA.lyrics),
   videos:    ()=>renderVideos(DATA.videos),
   notes:     ()=>renderNotes(DATA.notes),
   contact:   ()=>renderContact(DATA.contact),
