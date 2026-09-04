@@ -1,6 +1,6 @@
 /* Youth Alive 26 — minimal offline service worker.
    Bump CACHE when you change content so phones get the update. */
-const CACHE = "ya26-v23";
+const CACHE = "ya26-v24";
 const SHELL = [
   "./",
   "./index.html",
