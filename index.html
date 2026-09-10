@@ -255,6 +255,11 @@
   .vwatch{position:absolute;left:10px;bottom:10px;background:rgba(20,18,40,.72);color:#fff;
     font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
 
+  /* camp map */
+  .campmap{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+    background:var(--soft);line-height:0}
+  .campmap img{width:100%;height:auto;display:block}
+
   /* transport */
   .subh{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);font-size:16px;margin:22px 0 10px}
   .lyrics-intro{margin-top:-4px}
@@ -398,6 +403,7 @@ const ICONS = {
   packing:  '<svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9Z"/><path d="M9.5 8.5a2.5 2.5 0 0 1 5 0"/><path d="M8 14h8"/><path d="M10.5 4.6a1.5 1.5 0 0 1 3 0"/></svg>',
   dont:     '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m6.2 6.2 11.6 11.6"/></svg>',
   transport:'<svg class="ic" viewBox="0 0 24 24"><rect x="6" y="3.5" width="12" height="13" rx="3.5"/><path d="M6 10.5h12"/><circle cx="9.5" cy="13.3" r=".9"/><circle cx="14.5" cy="13.3" r=".9"/><path d="M8.5 16.5 7 20M15.5 16.5 17 20"/></svg>',
+  map:      '<svg class="ic" viewBox="0 0 24 24"><path d="M12 21s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0C5.5 15 12 21 12 21Z"/><circle cx="12" cy="10" r="2.4"/></svg>',
   music:    '<svg class="ic" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/></svg>',
   videos:   '<svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="3"/><path d="M10.5 9.2l4.2 2.8-4.2 2.8z"/></svg>',
   lyrics:   '<svg class="ic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v3.5M9 20.5h6"/></svg>',
@@ -415,6 +421,7 @@ const DATA = {
     { id:"packing",   en:"Packing list", tr:"Eşya listesi", he:"What to bring",       ht:"Ne getirmeli" },
     { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
     { id:"transport", en:"Transport",    tr:"Ulaşım",       he:"Getting there",       ht:"Nasıl gidilir" },
+    { id:"map",       en:"Camp map",     tr:"Kamp haritası",he:"Find your way around",ht:"Alanı tanıyın" },
     { id:"music",     en:"Music",        tr:"Müzik",        he:"Playlists & lyrics",  ht:"Listeler & sözler" },
     { id:"videos",    en:"Videos",       tr:"Videolar",     he:"Watch the promos",    ht:"Tanıtım videoları" },
     { id:"notes",     en:"Notes",        tr:"Notlar",       he:"Good to know",        ht:"Faydalı bilgiler" },
@@ -571,6 +578,19 @@ const DATA = {
         {en:"Buy a ticket from Esenler Bus Terminal to Sakarya Bus Terminal.", tr:"Esenler Otogarı'ndan Sakarya Otobüs Terminali'ne bilet alın."},
       ]},
     ],
+    altTitle:{ en:"Coming by plane? Faster alternative", tr:"Uçakla mı geliyorsunuz? Daha hızlı alternatif" },
+    altNote:{ en:"A little more complicated, but quicker — it goes straight to Arifiye without passing through Bostancı.",
+              tr:"Biraz daha karmaşık ama daha hızlı — Bostancı'ya uğramadan doğrudan Arifiye'ye gider." },
+    altRoute:{ name:{en:"From Sabiha Gökçen Airport", tr:"Sabiha Gökçen Havalimanı'ndan"}, steps:[
+      {en:"Take the M4 metro from Sabiha Gökçen Airport and get off at Pendik.",
+       tr:"Sabiha Gökçen Havalimanı'ndan M4 metro hattına binin ve Pendik istasyonunda inin."},
+      {en:"Take bus 132A, 132P, KM27 or KM37 from Pendik metro to Pendik YHT (high-speed train) station.",
+       tr:"Pendik metro istasyonundan 132A, 132P, KM27 veya KM37 numaralı otobüse binerek Pendik YHT tren istasyonuna gidin."},
+      {en:"Take the train (YHT or regional) from Pendik YHT to Arifiye station.",
+       tr:"Pendik YHT istasyonundan trene (YHT veya bölgesel) binip Arifiye istasyonunda inin."},
+      {en:"From Arifiye, take local public transport or a bus to the campsite (Vadi Camping).",
+       tr:"Arifiye istasyonundan yerel toplu taşıma veya otobüse binerek kamp alanına (Vadi Camping) gidin."},
+    ]},
     faresTitle:{ en:"Fares & tickets", tr:"Ücretler & biletler" },
     fares:[
       { k:{en:"Marmaray",tr:"Marmaray"}, v:{en:"Full ≤ 82.17 TL · Discounted ≤ 37.13 TL",tr:"Tam ≤ 82,17 TL · İndirimli ≤ 37,13 TL"} },
@@ -584,6 +604,14 @@ const DATA = {
               tr:"Kamp alanı merkeze uzak, bu yüzden yerel <b>Sapanca–Yanık</b> otobüsüne binin (her 20–30 dk). İstanbulkart ve diğer şehir kartları geçmez — banka/kredi kartıyla ödeyin. Ücret 80 TL'yi geçmez." },
     ret:{ en:"The <b>Arifiye–Bostancı train departs at 20:03.</b> If you miss it, you'll need to stay overnight or return by bus.",
           tr:"<b>Arifiye–Bostancı treni 20:03'te kalkar.</b> Kaçıranlar gece konaklamak ya da otobüsle dönmek zorunda kalır." },
+  },
+
+  map: {
+    title:{ en:"Camp map", tr:"Kamp haritası" },
+    intro:{ en:"Here's the layout of Vadi Camping — camping areas, the river, meal and workshop spots, fire pits and facilities. Tap the map to open it full-size and zoom in.",
+            tr:"Vadi Camping'in yerleşim planı — kamp alanları, nehir, yemek ve atölye noktaları, ateş çukurları ve tesisler. Büyütmek için haritaya dokunun." },
+    note:{ en:"Your group and workshop spots are marked on the map — the team will point them out on arrival.",
+           tr:"Grubunuz ve atölye noktaları harita üzerinde işaretli — ekip varışta size gösterecek." },
   },
 
   music: {
@@ -702,6 +730,11 @@ function renderTransport(d){
       <div class="body"><ol class="steplist">${steps}</ol></div>
     </details>`;
   }).join("");
+  const altSteps = d.altRoute.steps.map(s=>`<li>${L(s)}</li>`).join("");
+  const altRoute = `<details class="acc">
+      <summary>${L(d.altRoute.name)} <span class="caret">▾</span></summary>
+      <div class="body"><ol class="steplist">${altSteps}</ol></div>
+    </details>`;
   const fares = d.fares.map(f=>`<div class="fact"><div class="k">${L(f.k)}</div><div class="v">${L(f.v)}</div></div>`).join("");
   const arrLabel = lang==="en" ? "On arrival in Sapanca" : "Sapanca'ya varışta";
   const retLabel = lang==="en" ? "Return" : "Dönüş";
@@ -709,6 +742,9 @@ function renderTransport(d){
     `<p class="intro">${L(d.intro)}</p>
      <div class="subh">${L(d.routesTitle)}</div>
      ${routes}
+     <div class="subh">${L(d.altTitle)}</div>
+     <p class="intro">${L(d.altNote)}</p>
+     ${altRoute}
      <div class="subh">${L(d.faresTitle)}</div>
      <div class="facts one">${fares}</div>
      <div class="tip"><b>${arrLabel}</b><br>${d.arrival[lang]}</div>
@@ -782,6 +818,17 @@ function renderNotes(d){
   return sectionShell("notes", L(d.title), items);
 }
 
+function renderMap(d){
+  const src = lang==="en" ? "campmap-en.webp" : "campmap-tr.webp";
+  const alt = lang==="en" ? "Vadi Camping site map" : "Vadi Camping kamp alanı haritası";
+  return sectionShell("map", L(d.title),
+    `<p class="intro">${L(d.intro)}</p>
+     <a class="campmap" href="${src}" target="_blank" rel="noopener" aria-label="${alt}">
+       <img src="${src}" width="1920" height="1080" alt="${alt}" loading="lazy">
+     </a>`,
+    `<div class="tip">${L(d.note)}</div>`);
+}
+
 function renderContact(d){
   const links = d.links.map(l=>`<a class="linkbtn" href="${esc(l.href)}" target="_blank" rel="noopener">
       <span class="lico">${ICONS[l.ico]||""}</span><span class="lmain">${L(l.t)}<span class="lsub">${L(l.s)}</span></span></a>`).join("");
@@ -798,6 +845,7 @@ const SECTION_RENDERERS = {
   packing:   ()=>renderPacking(DATA.packing),
   dont:      ()=>renderDont(DATA.dont),
   transport: ()=>renderTransport(DATA.transport),
+  map:       ()=>renderMap(DATA.map),
   music:     ()=>renderMusic(DATA.music),
   videos:    ()=>renderVideos(DATA.videos),
   notes:     ()=>renderNotes(DATA.notes),
