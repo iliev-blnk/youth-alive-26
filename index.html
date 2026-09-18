@@ -267,6 +267,15 @@
   ol.steplist{margin:2px 0 0;padding-left:20px}
   ol.steplist li{margin:6px 0;color:var(--ink)}
 
+  /* schedule */
+  ul.timeline{list-style:none;margin:0 0 14px;padding:0}
+  ul.timeline:last-child{margin-bottom:0}
+  ul.timeline li{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}
+  ul.timeline li:last-child{border-bottom:0}
+  .t-time{flex:0 0 auto;min-width:78px;font-family:"Figtree",sans-serif;font-weight:700;
+    color:var(--indigo);font-size:13.5px;padding-top:1px}
+  .t-text{color:var(--ink);font-size:14.5px}
+
   /* contact */
   .links{display:grid;gap:8px}
   .linkbtn{display:flex;align-items:center;gap:12px;text-decoration:none;
@@ -373,8 +382,8 @@
 /* ============================================================
    Youth Alive 26 — camp info hub. All content lives here.
    To update: edit the DATA object below. Every field has
-   { en, tr }. Schedule + Music are placeholders — drop the
-   real content into DATA.schedule / DATA.music when ready.
+   { en, tr }. Music is still a placeholder — drop the real
+   content into DATA.music when ready.
    ============================================================ */
 
 const UI = {
@@ -416,7 +425,7 @@ const ICONS = {
 const DATA = {
   nav: [
     { id:"facts",     en:"Quick facts",  tr:"Özet bilgi",   he:"Dates, place, fee",   ht:"Tarih, yer, ücret" },
-    { id:"schedule",  en:"Schedule",     tr:"Program",      he:"Daily program",       ht:"Günlük program", soon:true },
+    { id:"schedule",  en:"Schedule",     tr:"Program",      he:"Daily program",       ht:"Günlük program" },
     { id:"rules",     en:"Rules",        tr:"Kurallar",     he:"Camp do's & don'ts",  ht:"Uyulması gerekenler" },
     { id:"packing",   en:"Packing list", tr:"Eşya listesi", he:"What to bring",       ht:"Ne getirmeli" },
     { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
@@ -446,9 +455,120 @@ const DATA = {
   schedule: {
     title:{ en:"Schedule", tr:"Program" },
     ico:"🗓️",
-    placeholder:true,
-    text:{ en:"The full day-by-day program will appear here as soon as it's confirmed.",
-           tr:"Gün gün tam program, kesinleşir kesinleşmez burada yer alacaktır." },
+    intro:{ en:"The full day-by-day program. Times are approximate and may shift slightly on site.",
+            tr:"Gün gün tam program. Saatler yaklaşıktır, kampta hafif değişiklik gösterebilir." },
+    days:[
+      {
+        name:{ en:"Friday · 18 Sep", tr:"Cuma · 18 Eylül" },
+        blocks:[
+          [
+            { time:"10:00–12:00", en:"Check-in and registration", tr:"Giriş ve kayıt" },
+            { time:"11:00", en:"Free time / shower time", tr:"Serbest zaman / duş zamanı" },
+            { time:"12:00", en:"Lunch", tr:"Öğle yemeği" },
+          ],
+          [
+            { time:"13:30", en:"Facilitators meeting", tr:"Kolaylaştırıcı toplantısı" },
+            { time:"13:30", en:"Participants free time", tr:"Katılımcı serbest zamanı" },
+          ],
+          [
+            { time:"15:00", en:"Welcome YA 26 (general orientation)", tr:"Hoş geldiniz YA 26 (genel oryantasyon)" },
+            { time:"16:00", en:"Free time / shower time", tr:"Serbest zaman / duş zamanı" },
+          ],
+          [
+            { time:"18:00", en:"Supper", tr:"Akşam yemeği" },
+          ],
+          [
+            { time:"19:00", en:"Opening", tr:"Açılış" },
+            { time:"19:45", en:"Vespers", tr:"Akşam ibadeti" },
+            { time:"20:00", en:"Bounded by Love #1", tr:"Sevgiyle Bağlı #1" },
+            { time:"20:30", en:"Friendship Group session #1 · 45 min", tr:"Dostluk Grubu oturumu #1 · 45 dk" },
+            { time:"21:15", en:"Mixed groups activity · 30 min", tr:"Karma grup etkinliği · 30 dk" },
+            { time:"21:45", en:"Campfire", tr:"Kamp ateşi" },
+          ],
+          [
+            { time:"22:30", en:"Participants free time", tr:"Katılımcı serbest zamanı" },
+            { time:"22:30", en:"Facilitators feedback meeting", tr:"Kolaylaştırıcı geri bildirim toplantısı" },
+            { time:"23:30", en:"Quiet time", tr:"Sessizlik zamanı" },
+            { time:"23:30", en:"Start of the rounds", tr:"Devriye başlangıcı" },
+          ],
+        ],
+      },
+      {
+        name:{ en:"Saturday · 19 Sep", tr:"Cumartesi · 19 Eylül" },
+        blocks:[
+          [
+            { time:"07:30", en:"Power moment", tr:"Güç Anı" },
+            { time:"08:15", en:"Official wake up / shower time", tr:"Resmi uyanma / duş zamanı" },
+            { time:"08:30", en:"Breakfast", tr:"Kahvaltı" },
+            { time:"09:30", en:"End of breakfast / shower time", tr:"Kahvaltı bitişi / duş zamanı" },
+          ],
+          [
+            { time:"09:45", en:"Opening", tr:"Açılış" },
+            { time:"10:00", en:"Bounded by Love #2 · 30 min", tr:"Sevgiyle Bağlı #2 · 30 dk" },
+            { time:"10:30", en:"Friendship Group session #2 · 45 min", tr:"Dostluk Grubu oturumu #2 · 45 dk" },
+            { time:"11:15", en:"Break", tr:"Mola" },
+            { time:"11:30", en:"Workshops · 1h", tr:"Atölyeler · 1 saat" },
+            { time:"12:30", en:"Lunch", tr:"Öğle yemeği" },
+          ],
+          [
+            { time:"13:15", en:"Friendship Group session #3 · 45 min", tr:"Dostluk Grubu oturumu #3 · 45 dk" },
+          ],
+          [
+            { time:"14:30", en:"Groups 1–3: Friendship Group session #4", tr:"Grup 1–3: Dostluk Grubu oturumu #4" },
+            { time:"14:30", en:"Groups 4–7: Outdoor activities", tr:"Grup 4–7: Açık alan etkinlikleri" },
+          ],
+          [
+            { time:"16:30", en:"Groups 4–7: Friendship Group session #4", tr:"Grup 4–7: Dostluk Grubu oturumu #4" },
+            { time:"16:30", en:"Groups 4–7: Shower time", tr:"Grup 4–7: Duş zamanı" },
+            { time:"16:30", en:"Groups 1–3: Outdoor activities", tr:"Grup 1–3: Açık alan etkinlikleri" },
+          ],
+          [
+            { time:"18:30", en:"Groups 1–3: Shower time", tr:"Grup 1–3: Duş zamanı" },
+            { time:"18:30", en:"Participants free time", tr:"Katılımcı serbest zamanı" },
+          ],
+          [
+            { time:"19:00", en:"Supper / dinner", tr:"Akşam yemeği" },
+            { time:"20:00", en:"End of supper / dinner", tr:"Akşam yemeği bitişi" },
+          ],
+          [
+            { time:"20:15", en:"Opening", tr:"Açılış" },
+            { time:"20:30", en:"Bounded by Love #3 · 30 min", tr:"Sevgiyle Bağlı #3 · 30 dk" },
+            { time:"21:00", en:"Friendship Group session #5", tr:"Dostluk Grubu oturumu #5" },
+          ],
+          [
+            { time:"22:00", en:"Participants free time", tr:"Katılımcı serbest zamanı" },
+            { time:"22:00", en:"Facilitators feedback meeting", tr:"Kolaylaştırıcı geri bildirim toplantısı" },
+            { time:"23:30", en:"Quiet time", tr:"Sessizlik zamanı" },
+            { time:"23:30", en:"Start of the rounds", tr:"Devriye başlangıcı" },
+          ],
+        ],
+      },
+      {
+        name:{ en:"Sunday · 20 Sep", tr:"Pazar · 20 Eylül" },
+        blocks:[
+          [
+            { time:"07:30", en:"Power moment", tr:"Güç Anı" },
+            { time:"08:15", en:"Official wake up / shower time", tr:"Resmi uyanma / duş zamanı" },
+            { time:"08:30", en:"Breakfast", tr:"Kahvaltı" },
+            { time:"09:30", en:"End of breakfast / shower time", tr:"Kahvaltı bitişi / duş zamanı" },
+          ],
+          [
+            { time:"09:30", en:"Bounded by Love #4 · 30 min", tr:"Sevgiyle Bağlı #4 · 30 dk" },
+          ],
+          [
+            { time:"10:00", en:"Participants free time", tr:"Katılımcı serbest zamanı" },
+            { time:"11:00", en:"Packing to leave / empty the tents", tr:"Ayrılış için toplanma / çadırları boşaltma" },
+            { time:"12:00", en:"Cleaning tents", tr:"Çadır temizliği" },
+            { time:"12:30", en:"Lunch", tr:"Öğle yemeği" },
+          ],
+          [
+            { time:"13:30", en:"Love presentations · 2h", tr:"Sevgi sunumları · 2 saat" },
+            { time:"15:30", en:"Farewell Youth Alive 26", tr:"Veda Youth Alive 26" },
+            { time:"16:00", en:"Bye bye Vadi Camping", tr:"Hoşça kal Vadi Camping" },
+          ],
+        ],
+      },
+    ],
   },
 
   rules: {
@@ -699,6 +819,21 @@ function renderPlaceholder(id, d){
     `<div class="callout">${L(d.text)}</div>`);
 }
 
+function renderSchedule(d){
+  const days = d.days.map((day,i)=>{
+    const blocks = day.blocks.map(block=>{
+      const items = block.map(it=>`<li><span class="t-time">${it.time}</span><span class="t-text">${L(it)}</span></li>`).join("");
+      return `<ul class="timeline">${items}</ul>`;
+    }).join("");
+    return `<details class="acc" ${i===0?"open":""}>
+      <summary>${L(day.name)} <span class="caret">▾</span></summary>
+      <div class="body">${blocks}</div>
+    </details>`;
+  }).join("");
+  return sectionShell("schedule", L(d.title),
+    `<p class="intro">${L(d.intro)}</p>${days}`);
+}
+
 function renderRules(d){
   const lis = d.list.map(r=>`<li><div><span class="rule-t">${L(r.t)}.</span> <span class="rule-d">${L(r.d)}</span></div></li>`).join("");
   return sectionShell("rules", L(d.title),
@@ -840,7 +975,7 @@ function renderContact(d){
 /* one renderer per section, keyed by id (matches nav + hash) */
 const SECTION_RENDERERS = {
   facts:     ()=>renderFacts(DATA.facts),
-  schedule:  ()=>renderPlaceholder("schedule", DATA.schedule),
+  schedule:  ()=>renderSchedule(DATA.schedule),
   rules:     ()=>renderRules(DATA.rules),
   packing:   ()=>renderPacking(DATA.packing),
   dont:      ()=>renderDont(DATA.dont),
