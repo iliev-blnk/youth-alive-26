@@ -129,10 +129,19 @@
   .tile .tico{width:46px;height:46px;flex:0 0 auto;border-radius:13px;background:var(--tint);
     color:var(--indigo);display:grid;place-items:center}
   .tile .tico .ic{width:26px;height:26px}
+  .tile .ttext{display:contents}
   .tile .tlabel{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:17px;line-height:1.15}
   .tile .thint{color:var(--muted);font-size:12.5px;margin-top:-7px}
   .tile .tsoon{position:absolute;top:13px;right:13px;background:var(--tint);color:var(--indigo);
     font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:999px;padding:2px 7px}
+  .tile.wide{grid-column:1 / -1;flex-direction:row;align-items:center;gap:14px}
+  .tile.wide .ttext{display:flex;flex-direction:column;gap:2px}
+  .tile.wide .thint{margin-top:0}
+  .tile.featured{background:var(--indigo);border-color:var(--indigo)}
+  .tile.featured:hover{border-color:var(--indigo);box-shadow:0 12px 26px rgba(69,48,224,.28)}
+  .tile.featured .tico{background:rgba(255,255,255,.18);color:#fff}
+  .tile.featured .tlabel{color:#fff}
+  .tile.featured .thint{color:rgba(255,255,255,.75)}
 
   /* ---------- Detail header (shown when viewing one category) ---------- */
   .dhead{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -424,8 +433,8 @@ const ICONS = {
 
 const DATA = {
   nav: [
+    { id:"schedule",  en:"Schedule",     tr:"Program",      he:"Daily program",       ht:"Günlük program", wide:true, featured:true },
     { id:"facts",     en:"Quick facts",  tr:"Özet bilgi",   he:"Dates, place, fee",   ht:"Tarih, yer, ücret" },
-    { id:"schedule",  en:"Schedule",     tr:"Program",      he:"Daily program",       ht:"Günlük program" },
     { id:"rules",     en:"Rules",        tr:"Kurallar",     he:"Camp do's & don'ts",  ht:"Uyulması gerekenler" },
     { id:"packing",   en:"Packing list", tr:"Eşya listesi", he:"What to bring",       ht:"Ne getirmeli" },
     { id:"dont",      en:"Don't bring",  tr:"Getirilmez",   he:"Leave these at home", ht:"Evde bırakın" },
@@ -989,11 +998,13 @@ const SECTION_RENDERERS = {
 
 function renderTiles(){
   document.getElementById("tiles").innerHTML = DATA.nav.map(n=>`
-    <a class="tile" href="#${n.id}">
+    <a class="tile${n.wide?" wide":""}${n.featured?" featured":""}" href="#${n.id}">
       ${n.soon ? `<span class="tsoon">${L(UI.soon)}</span>` : ""}
       <span class="tico">${ICONS[n.id]||""}</span>
-      <span class="tlabel">${esc(n[lang])}</span>
-      <span class="thint">${esc(lang==="en" ? n.he : n.ht)}</span>
+      <span class="ttext">
+        <span class="tlabel">${esc(n[lang])}</span>
+        <span class="thint">${esc(lang==="en" ? n.he : n.ht)}</span>
+      </span>
     </a>`).join("");
 }
 
